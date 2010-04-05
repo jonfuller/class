@@ -21,3 +21,28 @@ Context: WhenStackHasAMillionItems
   IsEmptyShouldBeFalse()
   PushShouldExecuteOkay()
   TopShouldReturnTheLastPushedItem()
+
+Sewing Machine Exercise:
+Context: WhenMachineIsInitialized
+  TableSizeShouldReportTheTablesSize()
+  WorkpieceSizeShouldBeZeroByZero()
+  MoveToWithYEqualToTableSizeHeightMinusOneShouldMoveTheNeedle()
+  MoveToWithXEqualToTableSizeWidthMinusOneShouldMoveTheNeedle()
+  MoveToWithYEqualToTableSizeHeightShouldThrowInvalidNeedlePositionException()
+  MoveToWithXEqualToTableSizeWidthShouldThrowInvalidNeedlePositionException()
+  SewToShouldThrowNoWorkpieceException()
+  
+Context: WhenSettingWorkpieceSize
+  SetWorkpieceSizeShouldResultInWorkpieceSizeWithGivenSize()
+  SetWorkpieceSizeWithWidthEqualToTableSizeWidthShouldResultInWorkpieceSizeWidthBeingSetAccordingly()
+  SetWorkpieceSizeWithHeightEqualToTableSizeHeightShouldResultInWorkpieceSizeHeightBeingSetAccordingly()
+  SetWorkpieceSizeWithWidthLargerThanTableWidthShouldResultInThrownWorkpieceTooLargeException()
+  SetWorkpieceSizeWithHeightLargerThanTableHeightShouldResultInThrownWorkpieceTooLargeException()
+
+Context: WhenSewing (assumes a workpiece has been set up)
+  SewToWithYEqualToWorkpieceSizeHeightMinusOneSewShouldSewToThatLocation()
+  SewToWithXEqualToWorkpieceSizeWidthMinusOneShouldSewToThatLocation()
+  SewToWithYEqualToWorkpieceSizeHeightShouldThrowInvalidNeedlePositionException()
+  SewToWithXEqualToWorkpieceSizeWidthShouldThrowInvalidNeedlePositionException()
+  SewToWithSamePositionAsPreviouslyJustMovedToResultsInThrownInvalidNeedlePositionException()
+  SewToWithSamePositionAsPreviouslyJustSewnToResultsInThrownInvalidNeedlePositionException()
