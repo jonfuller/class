@@ -1,0 +1,23 @@
+Stack Exercise:
+Context: WhenStackIsEmpty
+  PopShouldThrowStackEmptyException()
+  TopShouldThrowStackEmptyException()
+  IsEmptyShouldBeTrue()
+  PushShouldExecuteOkay()
+  PushShouldResultInTopReturningPushedItem()
+  PushShouldResultInIsEmptyNowBeingFalse()
+
+Context: WhenStackHas1Item
+  PopShouldReturnTheItem()
+  PopTwiceShouldResultInThrownStackEmptyException()
+  PopShouldResultInIsEmptyNowBeingTrue()
+  PushShouldExecuteOkay()
+  IsEmptyShouldBeFalse()
+  TopShouldReturnTheItem()
+  TopShouldNotResultInIsEmptyNowBeingTrue()
+
+Context: WhenStackHasAMillionItems
+  PopShouldReturnTheLastPushedItem()
+  IsEmptyShouldBeFalse()
+  PushShouldExecuteOkay()
+  TopShouldReturnTheLastPushedItem()
