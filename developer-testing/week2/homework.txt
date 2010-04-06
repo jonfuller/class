@@ -40,6 +40,7 @@ Context: WhenSettingWorkpieceSize
   SetWorkpieceSizeWithHeightLargerThanTableHeightShouldResultInThrownWorkpieceTooLargeException()
 
 Context: WhenSewing (assumes a workpiece has been set up)
+  SewToAnywhereAfterMovedToLocationOutsideOfWorkpieceShouldThrowInvalidNeedlePositionException()
   SewToWithYEqualToWorkpieceSizeHeightMinusOneSewShouldSewToThatLocation()
   SewToWithXEqualToWorkpieceSizeWidthMinusOneShouldSewToThatLocation()
   SewToWithYEqualToWorkpieceSizeHeightShouldThrowInvalidNeedlePositionException()
