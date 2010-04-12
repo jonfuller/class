@@ -15,7 +15,6 @@ describe SewingMachine do
       @machine.workpiece_size.should be_of_size(Size.empty)
     end
 
-
       #lambda { @machine.whatever }.should raise_exception(WhateverException)
   end
 end
