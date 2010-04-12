@@ -10,6 +10,10 @@ describe Stack2 do
       @stack.should be_empty
     end
 
+    it 'should have zero size' do
+      @stack.size.should be(0)
+    end
+
     it 'should throw stack empty exception when popped' do
       lambda { @stack.pop }.should raise_exception(StackEmptyException)
     end
@@ -42,6 +46,12 @@ describe Stack2 do
 
     it 'should return that item on pop' do
       @stack.pop.should eql('hello')
+    end
+
+    it 'should raise stack empty exception when popped twice' do
+      lambda{
+        @stack.pop
+        @stack.pop }.should raise_exception(StackEmptyException)
     end
   end
 end

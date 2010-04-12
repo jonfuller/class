@@ -1,27 +1,28 @@
 class Stack2
-  def init
+  def initialize
+    @items = []
   end
 
-  def empty?()
-    !@item
+  def empty?
+    @items.length == 0
   end
 
   def pop
-    raise StackEmptyException.new unless @item
-    @item
+    raise StackEmptyException.new unless @items.length > 0
+    @items.pop
   end
 
   def top
-    raise StackEmptyException.new unless @item
-    @item
+    raise StackEmptyException.new unless @items.length > 0
+    @items.last
   end
 
   def push(item)
-    @item = item
+    @items << item
   end
 
   def size
-    1
+    @items.length
   end
 
 end
