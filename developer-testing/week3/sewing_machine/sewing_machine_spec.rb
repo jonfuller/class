@@ -7,12 +7,23 @@ describe SewingMachine do
       @machine = SewingMachine.new(Size.new(10, 10))
     end
 
+    it 'should raise invalid size if table dimension is zero or less' do
+     lambda { SewingMachine.new(Size.new(-1, 1)) }.should raise_exception(InvalidSize) 
+     lambda { SewingMachine.new(Size.new(1, 0)) }.should raise_exception(InvalidSize) 
+    end
+
     it 'should report table size' do
       @machine.table_size.should be_of_size(Size.new(10, 10))
     end
 
     it 'should have empty workpiece size' do
       @machine.workpiece_size.should be_of_size(Size.empty)
+    end
+  end
+
+  context '(when setting workpiece size)' do
+    before(:each) do
+      @machine = SewingMachine.new(Size.new(10, 10))
     end
 
     it 'should be able to set workpiece size to table size' do
@@ -30,9 +41,5 @@ describe SewingMachine do
       lambda { @machine.workpiece_size = Size.new(1, 0) }.should raise_exception(InvalidSize)
     end
 
-    it 'should raise invalid size if table dimension is zero or less' do
-     lambda { SewingMachine.new(Size.new(-1, 1)) }.should raise_exception(InvalidSize) 
-     lambda { SewingMachine.new(Size.new(1, 0)) }.should raise_exception(InvalidSize) 
-    end
   end
 end
