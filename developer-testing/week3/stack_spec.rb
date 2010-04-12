@@ -91,5 +91,14 @@ describe Stack2 do
     it 'should not be empty' do
       @stack.should_not be_empty
     end
+
+    it 'should be able to push another item onto the stack' do
+      @stack.push('another item')
+      @stack.size.should be(201)
+    end
+
+    it 'should return last pushed item on top' do
+      @stack.top.should eql('199')
+    end
   end
 end
