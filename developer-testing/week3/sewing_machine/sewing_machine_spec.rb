@@ -15,6 +15,24 @@ describe SewingMachine do
       @machine.workpiece_size.should be_of_size(Size.empty)
     end
 
-      #lambda { @machine.whatever }.should raise_exception(WhateverException)
+    it 'should be able to set workpiece size to table size' do
+      @machine.workpiece_size = Size.new(10, 10)
+      @machine.workpiece_size.should be_of_size(@machine.table_size)
+    end
+
+    it 'should raise invalid size exception if workpiece is larger than table' do
+      lambda { @machine.workpiece_size = Size.new(11, 1) }.should raise_exception(InvalidSize)
+      lambda { @machine.workpiece_size = Size.new(1, 11) }.should raise_exception(InvalidSize)
+    end
+
+    it 'should raise invalid size if workpiece dimension is zero or less' do
+      lambda { @machine.workpiece_size = Size.new(-1, 1) }.should raise_exception(InvalidSize)
+      lambda { @machine.workpiece_size = Size.new(1, 0) }.should raise_exception(InvalidSize)
+    end
+
+    it 'should raise invalid size if table dimension is zero or less' do
+     lambda { SewingMachine.new(Size.new(-1, 1)) }.should raise_exception(InvalidSize) 
+     lambda { SewingMachine.new(Size.new(1, 0)) }.should raise_exception(InvalidSize) 
+    end
   end
 end
