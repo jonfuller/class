@@ -53,5 +53,10 @@ describe Stack2 do
         @stack.pop
         @stack.pop }.should raise_exception(StackEmptyException)
     end
+
+    it 'should be empty after single pop' do
+      @stack.pop
+      @stack.should be_empty
+    end
   end
 end
