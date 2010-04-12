@@ -7,7 +7,8 @@ class Stack2
   end
 
   def pop
-    raise StackEmptyException.new
+    raise StackEmptyException.new unless @item
+    @item
   end
 
   def top
