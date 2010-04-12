@@ -21,6 +21,7 @@ describe SewingMachine do
     end
 
     it 'should be able to move to location within table size' do
+      lambda { @machine.move_to(0, 0) }.should_not raise_exception(InvalidPosition)
       lambda { @machine.move_to(10, 10) }.should_not raise_exception(InvalidPosition)
     end
 
@@ -58,6 +59,32 @@ describe SewingMachine do
       lambda { @machine.workpiece_size = Size.new(-1, 1) }.should raise_exception(InvalidSize)
       lambda { @machine.workpiece_size = Size.new(1, 0) }.should raise_exception(InvalidSize)
     end
+  end
 
+  context '(when sewing)' do
+     before(:each) do
+       @machine = SewingMachine.new(Size.new(10, 10))
+       @machine.workpiece_size = Size.new(6, 8)
+     end
+
+     it 'should raise invalid position when sewing anywhere after having moved to location outside of workpiece' do
+       @machine.move_to(9, 9)
+       lambda { @machine.sew_to(1, 1) }.should raise_exception(InvalidPosition)
+     end
+
+     it 'should sew to edge of workpiece' do
+       @machine.sew_to(6, 8)
+       @machine.current_location.should be_at(Point.new(6, 8))
+     end
+
+     it 'should raise invalid position when trying to sew outside of workpiece' do
+       lambda { @machine.sew_to(7, 1) }.should raise_exception(InvalidPosition)
+       lambda { @machine.sew_to(1, 9) }.should raise_exception(InvalidPosition)
+     end
+
+     it 'should raise invalid position when trying to sew to current location)' do
+       @machine.move_to(0, 0)
+       lambda { @machine.sew_to(0, 0) }.should raise_exception(InvalidPosition)
+     end
   end
 end

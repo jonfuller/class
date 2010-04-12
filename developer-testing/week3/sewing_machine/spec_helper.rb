@@ -12,3 +12,16 @@ Spec::Matchers.define :be_of_size do |size_expected|
   end
 end
 
+Spec::Matchers.define :be_at do |point_expected|
+  match do |point_actual|
+    (point_actual.x == point_expected.x) && (point_actual.y == point_expected.y)
+  end
+
+  failure_message_for_should do |point_actual|
+    "Wrong point, expected #{point_expected.to_s}, got #{point_actual.to_s}"
+  end
+
+  description do
+    "Testing points"
+  end
+end
