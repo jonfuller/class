@@ -1,0 +1,9 @@
+Autotest.add_hook(:initialize) {|at|
+  at.add_exception %r{^spec_helper.rb}
+
+  at.add_mapping(%r{^.*.rb$}) {|f, _|
+    Dir['*_spec.rb']
+  }
+  nil
+}
+
