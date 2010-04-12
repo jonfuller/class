@@ -14,6 +14,15 @@ class SewingMachine
     @workpiece_size = new_size
   end
 
+  def move_to(x, y)
+    raise InvalidPosition if (x < 0 || y < 0)
+    raise InvalidPosition if (x < @table_size.width || y < @table_size.height)
+  end
+
+  def sew_to(x, y)
+    raise NoWorkpiece if @workpiece_size.width == 0
+  end
+
   def verify_positive_value_size(size)
     raise InvalidSize if (size.width <= 0 || size.height <= 0)
   end
@@ -37,4 +46,10 @@ class Size
 end
 
 class InvalidSize < Exception
+end
+
+class InvalidPosition < Exception
+end
+
+class NoWorkpiece < Exception
 end

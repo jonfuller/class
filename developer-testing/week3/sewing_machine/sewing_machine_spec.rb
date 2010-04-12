@@ -19,6 +19,24 @@ describe SewingMachine do
     it 'should have empty workpiece size' do
       @machine.workpiece_size.should be_of_size(Size.empty)
     end
+
+    it 'should be able to move to location within table size' do
+      lambda { @machine.move_to(10, 10) }.should_not raise_exception(InvalidPosition)
+    end
+
+    it 'should not be able to move to negative location' do
+      lambda { @machine.move_to(-1, 0) }.should raise_exception(InvalidPosition)
+      lambda { @machine.move_to(0, -1) }.should raise_exception(InvalidPosition)
+    end
+
+    it 'should not be able to move to location outside of table size' do
+      lambda { @machine.move_to(11, 0) }.should raise_exception(InvalidPosition)
+      lambda { @machine.move_to(0, 11) }.should raise_exception(InvalidPosition)
+    end
+
+    it 'should raise no workpiece' do
+      lambda { @machine.sew_to(1, 1) }.should raise_exception(NoWorkpiece)
+    end
   end
 
   context '(when setting workpiece size)' do
