@@ -25,7 +25,7 @@ describe Stack2 do
 
     it 'should have pushed item on top' do
       @stack.push 'hello'
-      @stack.top.should be('hello')
+      @stack.top.should eql('hello')
     end
 
   end
