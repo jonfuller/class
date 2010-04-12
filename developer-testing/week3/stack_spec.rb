@@ -44,7 +44,16 @@ describe Stack2 do
       @stack.push 'hello'
     end
 
-    it 'should return that item on pop' do
+    it 'should return the item on top' do
+      @stack.top.should eql('hello')
+    end
+
+    it 'should not be empty after top' do
+      @stack.top
+      @stack.should_not be_empty
+    end
+
+    it 'should return the item on pop' do
       @stack.pop.should eql('hello')
     end
 
@@ -67,5 +76,6 @@ describe Stack2 do
     it 'should not be empty' do
       @stack.should_not be_empty
     end
+
   end
 end
