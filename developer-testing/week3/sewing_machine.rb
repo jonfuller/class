@@ -15,6 +15,6 @@ class Size
   end
 
   def to_s
-    "[width='#{@width}', height='#{height}']"
+    "[width='#{@width}', height='#{@height}']"
   end
 end
