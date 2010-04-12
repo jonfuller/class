@@ -58,5 +58,10 @@ describe Stack2 do
       @stack.pop
       @stack.should be_empty
     end
+
+    it 'should have 2 items after another push' do
+      @stack.push 'goodbye'
+      @stack.size.should be(2)
+    end
   end
 end
