@@ -8,7 +8,11 @@ describe SewingMachine do
     end
 
     it 'should report table size' do
-      @machine.table_size.should be_of_size({:width=>10, :height=>10})
+      @machine.table_size.should be_of_size(Size.new(10, 10))
+    end
+
+    it 'should have empty workpiece size' do
+      @machine.workpiece_size.should be_of_size(Size.empty)
     end
 
 
