@@ -20,8 +20,8 @@ class SewingMachine
 end
 
 class Size
-  attr_accessor :width
-  attr_accessor :height
+  attr_reader :width
+  attr_reader :height
 
   def Size.empty
     Size.new
