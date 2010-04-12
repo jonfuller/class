@@ -76,6 +76,20 @@ describe Stack2 do
     it 'should not be empty' do
       @stack.should_not be_empty
     end
+  end
 
+  context '(when stack has a bunch of items)' do
+    before(:each) do
+      @stack = Stack2.new
+      200.times{ |i| @stack.push(i.to_s) }
+    end
+
+    it 'should return last pushed item on pop' do
+      @stack.pop.should eql('199')
+    end
+
+    it 'should not be empty' do
+      @stack.should_not be_empty
+    end
   end
 end
