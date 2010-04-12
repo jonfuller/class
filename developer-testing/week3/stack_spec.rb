@@ -28,5 +28,20 @@ describe Stack2 do
       @stack.top.should eql('hello')
     end
 
+    it 'should no longer be empty after push' do
+      @stack.push 'hello'
+      @stack.should_not be_empty
+    end
+  end
+
+  context '(when stack has 1 item)' do
+    before(:each) do
+      @stack = Stack2.new
+      @stack.push 'hello'
+    end
+
+    it 'should return that item on pop' do
+      @stack.pop.should eql('hello')
+    end
   end
 end

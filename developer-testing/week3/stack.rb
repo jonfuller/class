@@ -3,7 +3,7 @@ class Stack2
   end
 
   def empty?()
-    true
+    !@item
   end
 
   def pop
