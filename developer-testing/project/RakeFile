@@ -1,0 +1,65 @@
+require 'albacore'
+
+task :default => %W(build)
+task :build, :needs => [:clean, :assemblyinfo, :debug_config, :msbuild, :mspec]
+task :release, :needs => [:clean, :version, :assemblyinfo, :release_config, :msbuild, :copy_extensions, :package, :upload]
+
+task :clean do
+  FileUtils.rm_rf Dir.glob('*.zip')
+  FileUtils.rm_rf Dir.glob('**/*obj')
+  FileUtils.rm_rf Dir.glob('**/*bin')
+end
+
+msbuild do |msb|
+  msb.properties @build_config[:properties]
+  msb.targets @build_config[:targets]
+  msb.solution = 'src/TestDS.sln'
+end
+
+task :debug_config do
+  @build_config = {
+    :properties => {
+      :configuration => :Debug
+    },
+    :targets => [:Build]
+  }
+end
+
+task :release_config, :needs => [:version] do
+  @build_config = {
+    :properties => {
+      :configuration => :Release
+    },
+    :build_output_location => 'src/TestDS/bin/Release',
+    :package_location => File.dirname(__FILE__),
+    :package_filename => "TestDS.v#{@version}.zip",
+    :targets => [:Build]
+  }
+end
+
+task :version do
+  @version = '0.1'
+  @long_version = '0.1.0.0'
+end
+
+zip :package, :needs => [:release_config] do |zip|
+  zip.directories_to_zip @build_config[:build_output_location]
+  zip.output_file = @build_config[:package_filename]
+  zip.output_path = @build_config[:package_location]
+end
+
+assemblyinfo :assemblyinfo, :needs =>[:version] do |asm|
+  asm.version = @long_version
+  asm.file_version = @long_version
+  asm.title = 'TestDS'
+  asm.description = 'A .NET Testing Framework that Doesn\'t Suck'
+  asm.company_name = 'Jon Fuller'
+  asm.product_name = 'TestDS'
+  asm.copyright = 'Copyright Jon Fuller 2010'
+  asm.output_file = 'src/TestDS/Properties/AssemblyInfo.cs'
+end
+
+mspec do |mspec|
+  mspec.path_to_command = 'ext/mspec/mspec.exe'
+  mspec.assemblies = Dir.glob('src/**/bin/**/*Tests*.dll')
+end
