@@ -1,7 +1,7 @@
 require 'albacore'
 
 task :default => %W(build)
-task :build, :needs => [:clean, :assemblyinfo, :debug_config, :msbuild, :mspec]
+task :build, :needs => [:clean, :debug_config, :msbuild, :mspec]
 task :release, :needs => [:clean, :version, :assemblyinfo, :release_config, :msbuild, :copy_extensions, :package, :upload]
 
 task :clean do
