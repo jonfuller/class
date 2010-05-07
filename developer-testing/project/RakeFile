@@ -1,8 +1,9 @@
 require 'albacore'
+require 'hpricot'
 
 task :default => %W(build)
 task :build, :needs => [:clean, :debug_config, :msbuild, :mspec]
-task :release, :needs => [:clean, :version, :assemblyinfo, :release_config, :msbuild, :copy_extensions, :package, :upload]
+task :release, :needs => [:clean, :version, :assemblyinfo, :release_config, :msbuild, :package, :upload]
 
 task :clean do
   FileUtils.rm_rf Dir.glob('*.zip')
@@ -59,7 +60,25 @@ assemblyinfo :assemblyinfo, :needs =>[:version] do |asm|
   asm.output_file = 'src/TestDS/Properties/AssemblyInfo.cs'
 end
 
+task :growltest do
+  doc = open('results.xml'){|f| Hpricot(f)}
+  doc.search("//specification")
+  failed = doc.search("//specification[@status='failed']")
+  passed = doc.search("//specification[@status='passed']")
+
+  num_passed = passed.length
+  num_failed = failed.length
+
+  img = num_failed.zero? ? 'green' : 'red'
+  icon = "#{File.join(File.expand_path('.'), 'ext', 'growl', img)}.png"
+
+  failure_messages = failed.map{|f| f.parent["name"] + ": " + f["name"]}.join("\n")
+  message = "#{num_passed} passed, #{num_failed} failed.\n#{failure_messages}"
+  system "ext/growl/g.exe \"#{message}\" /i:\"#{icon}\""
+end
+
 mspec do |mspec|
   mspec.path_to_command = 'ext/mspec/mspec.exe'
   mspec.assemblies = Dir.glob('src/**/bin/**/*Tests*.dll')
+  mspec.options "--xml #{File.expand_path('.')}/results.xml"
 end
