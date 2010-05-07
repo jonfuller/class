@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TestDS.Tests
+namespace TestDS
 {
     public class TestSuite
     {

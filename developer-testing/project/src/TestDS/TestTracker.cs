@@ -1,4 +1,4 @@
-﻿namespace TestDS.Tests
+﻿namespace TestDS
 {
     public class TestTracker
     {
