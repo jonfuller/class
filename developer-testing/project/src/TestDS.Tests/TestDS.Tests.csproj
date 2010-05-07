@@ -44,11 +44,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acceptance.cs" />
-    <Compile Include="ITestCase.cs" />
+    <Compile Include="RunnerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestRunner.cs" />
-    <Compile Include="TestSuite.cs" />
-    <Compile Include="TestTracker.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TestDS\TestDS.csproj">
+      <Project>{A5AA2E61-A40C-414E-B180-48EB185DE35E}</Project>
+      <Name>TestDS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestRunner\Runner.csproj">
+      <Project>{3307011D-7CFA-409D-B79D-57AC17C7AE88}</Project>
+      <Name>Runner</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
