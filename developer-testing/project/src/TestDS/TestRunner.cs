@@ -17,13 +17,12 @@
             var numPassed = 0;
             var numFailed = 0;
 
-            theSuite.TestCases.Each(testCase =>
-                                    {
-                                        if (testCase.Run())
-                                            numPassed++;
-                                        else
-                                            numFailed++;
-                                    });
+            theSuite.TestContainers.Each(testContainer =>
+            {
+                var result = testContainer.Run();
+                numPassed += result.Passes;
+                numFailed += numFailed;
+            });
 
             _tracker.NumberPassed = numPassed;
             _tracker.NumberFailed = numFailed;

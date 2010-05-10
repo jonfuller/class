@@ -5,27 +5,49 @@ using Runner;
 namespace TestDS.Tests
 {
     [Subject("Acceptance")]
-    public class running_with_no_tests
+    public class Running_Suite_With_A_Test : ApplicationSpecs
     {
-        static Application application;
-        static StringWriter outputStream;
-        static bool output;
-
-        private Establish context = () =>
-                                    {
-                                        outputStream = new StringWriter();
-                                        application = new Application(outputStream, new[]{"AssemblyWithNoTests.dll"});
-                                    };
-
         Because of = () =>
-            output = application.Start();
+            exitCode = application.Start();
 
-        It should_report_no_tests_found = () =>
-            outputStream.ToString().ShouldEqual(@"Loaded: AssemblyWithNoTests.dll
-  No tests loaded.
-");
+        It should_report_assembly_loaded = () =>
+            output.ShouldContain("Loaded: AssemblyWithNoTests.dll");
+
+        It should_report_one_test_found;/* = () =>
+            output.ShouldEqual(@"1 test(s) loaded.");*/
 
         It should_output_success_value = () =>
-            output.ShouldBeTrue();
+            exitCode.ShouldBeTrue();
     }
+
+    [Subject("Acceptance")]
+    public class running_with_no_tests : ApplicationSpecs
+    {
+        Because of = () =>
+            exitCode = application.Start();
+
+        It should_report_assembly_loaded = () =>
+            output.ShouldContain("Loaded: AssemblyWithNoTests.dll");
+
+        It should_report_no_tests_found = () =>
+            output.ShouldContain("No tests loaded.");
+
+        It should_output_success_value = () =>
+            exitCode.ShouldBeTrue();
+    }
+
+    public abstract class ApplicationSpecs
+    {
+        protected static Application application;
+        protected static StringWriter outputStream;
+        protected static string output { get { return outputStream.ToString(); } }
+        protected static bool exitCode;
+
+        private Establish context = () =>
+        {
+            outputStream = new StringWriter();
+            application = new Application(outputStream, new[] { "AssemblyWithNoTests.dll" });
+        };
+    }
+
 }

@@ -1,11 +1,12 @@
-﻿using Machine.Specifications;
+﻿using System;
+using Machine.Specifications;
 
 namespace TestDS.Tests
 {
     [Subject("Test Runner")]
     public class Running_Suite_With_No_Tests : RunnerSpecs
     {
-        Establish context =() =>
+        Establish context = () =>
             TheSuite = Suites.NoTests;
 
         Because of = () =>
@@ -65,7 +66,7 @@ namespace TestDS.Tests
             Tracker.NumberPassed.ShouldEqual(1);
 
         It should_tell_tracker_zero_failing = () =>
-            Tracker.NumberFailed.ShouldEqual(1);
+            Tracker.NumberFailed.ShouldEqual(0);
     }
 
     public abstract class RunnerSpecs
@@ -97,7 +98,7 @@ namespace TestDS.Tests
             {
                 return new TestSuite()
                 {
-                    TestCases = new[]{new PassingTestCase()}
+                    TestContainers = new[]{new PassingTestContainer()}
                 };
             }
         }
@@ -108,29 +109,48 @@ namespace TestDS.Tests
             {
                 return new TestSuite()
                 {
-                    TestCases = new ITestCase[]
+                    TestContainers = new ITestContainer[]
                     {
-                        new PassingTestCase(),
-                        new FailingTestCase()
+                        new PassingTestContainer(),
+                        new FailingTestContainer()
                     }
                 };
             }
         }
     }
 
-    public class FailingTestCase : ITestCase
+    public class FailingTestContainer : ITestContainer
     {
-        public bool Run()
+        
+        public RunResult Run()
         {
-            return false;
+            return new RunResult()
+            {
+                Failures = 1,
+                Passes = 0
+            };
+        }
+
+        public string Name
+        {
+            get { return "failing"; }
         }
     }
 
-    public class PassingTestCase : ITestCase
+    public class PassingTestContainer : ITestContainer
     {
-        public bool Run()
+        public RunResult Run()
         {
-            return true;
+            return new RunResult()
+                       {
+                           Failures = 0,
+                           Passes = 1
+                       };
+        }
+
+        public string Name
+        {
+            get { return "passing"; }
         }
     }
 }

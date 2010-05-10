@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using TestDS;
 
 namespace Runner
@@ -28,6 +29,7 @@ namespace Runner
 
         public bool Start()
         {
+            var loader = new AssemblyTestLoader();
             _output.WriteLine("Loaded: {0}".FormatWith(_assemblyName));
             _output.WriteLine("  No tests loaded.");
             _output.Flush();

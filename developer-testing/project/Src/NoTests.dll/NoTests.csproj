@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E7DBC58F-BF8A-4AB6-BD0E-ED47983A3B3A}</ProjectGuid>
+    <ProjectGuid>{5CF3AEE9-7C0B-436F-BF24-3FFF58FB4DB3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestDS.Tests</RootNamespace>
-    <AssemblyName>TestDS.Tests</AssemblyName>
+    <RootNamespace>NoTests</RootNamespace>
+    <AssemblyName>NoTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Specifications">
-      <HintPath>..\..\ext\mspec\Machine.Specifications.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,28 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Acceptance.cs" />
-    <Compile Include="AssemblyTestLoaderSpecs.cs" />
-    <Compile Include="RunnerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NoTests.dll\NoTests.csproj">
-      <Project>{5CF3AEE9-7C0B-436F-BF24-3FFF58FB4DB3}</Project>
-      <Name>NoTests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SomeTests.dll\SomeTests.csproj">
-      <Project>{969D8DD8-0A9E-478C-9EF7-2D4E2E3277E0}</Project>
-      <Name>SomeTests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TestDS\TestDS.csproj">
-      <Project>{A5AA2E61-A40C-414E-B180-48EB185DE35E}</Project>
-      <Name>TestDS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TestRunner\Runner.csproj">
-      <Project>{3307011D-7CFA-409D-B79D-57AC17C7AE88}</Project>
-      <Name>Runner</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
