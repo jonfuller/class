@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Acceptance.cs" />
     <Compile Include="AssemblyTestLoaderSpecs.cs" />
+    <Compile Include="ClassContainerSpecs.cs" />
     <Compile Include="RunnerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -41,9 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyTestLoader.cs" />
+    <Compile Include="ClassContainer.cs" />
     <Compile Include="Ext.cs" />
     <Compile Include="ITestCase.cs" />
+    <Compile Include="ITestContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RunResult.cs" />
     <Compile Include="TestRunner.cs" />
     <Compile Include="TestSuite.cs" />
     <Compile Include="TestTracker.cs" />

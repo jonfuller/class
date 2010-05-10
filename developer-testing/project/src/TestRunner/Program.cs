@@ -30,7 +30,9 @@ namespace Runner
         public bool Start()
         {
             var loader = new AssemblyTestLoader();
-            _output.WriteLine("Loaded: {0}".FormatWith(_assemblyName));
+            var suite = loader.Load(_assemblyName);
+            suite.TestContainers.Sum(container => container.TestCases.Count());
+            _output.WriteLine("Loaded: {0}".FormatWith(Path.GetFileName(_assemblyName)));
             _output.WriteLine("  No tests loaded.");
             _output.Flush();
             return true;

@@ -3,5 +3,6 @@
     public interface ITestCase
     {
         bool Run();
+        string Name { get; }
     }
 }

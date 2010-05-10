@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Machine.Specifications;
 
 namespace TestDS.Tests
@@ -121,7 +122,11 @@ namespace TestDS.Tests
 
     public class FailingTestContainer : ITestContainer
     {
-        
+        public IEnumerable<ITestCase> TestCases
+        {
+            get { return new ITestCase[0]; }
+        }
+
         public RunResult Run()
         {
             return new RunResult()
@@ -139,6 +144,11 @@ namespace TestDS.Tests
 
     public class PassingTestContainer : ITestContainer
     {
+        public IEnumerable<ITestCase> TestCases
+        {
+            get { return new ITestCase[0]; }
+        }
+
         public RunResult Run()
         {
             return new RunResult()

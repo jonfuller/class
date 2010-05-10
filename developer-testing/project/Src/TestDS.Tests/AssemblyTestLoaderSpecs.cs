@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Reflection;
 using Machine.Specifications;
@@ -12,21 +11,22 @@ namespace TestDS.Tests
         Because of = () =>
             loadedSuite = TheLoader.Load(Assemblies.SomeTests);
 
-        It should_load_tests_ending_with_the_word_tests = () => {
+        It should_load_containers_ending_with_the_word_tests = () => {
             loadedSuite.TestContainers.All(c => c.Name.ToLower().EndsWith("tests"));
             loadedSuite.TestContainers.Count().ShouldBeGreaterThan(0);
         };
 
-        It should_not_load_tests_from_abstract_class = () =>
+        It should_not_load_containers_from_abstract_class = () =>
             loadedSuite.TestContainers.Any(c => c.Name.ToLower().Contains("abstract")).ShouldBeFalse();
 
-        It should_not_load_tests_from_interfaces = () =>
+        It should_not_load_containers_from_interfaces = () =>
             loadedSuite.TestContainers.Any(c => c.Name.ToLower().Contains("interface")).ShouldBeFalse();
 
-        It should_not_load_tests_from_enums = () =>
+        It should_not_load_containers_from_enums = () =>
             loadedSuite.TestContainers.Any(c => c.Name.ToLower().Contains("enum")).ShouldBeFalse();
     }
 
+    [Subject("Assembly loader")]
     public class loading_an_assembly_with_no_tests : AssemblyTestLoaderSpecs
     {
         Because of = () =>
@@ -54,6 +54,12 @@ namespace TestDS.Tests
                 assemblyName)
                 .Substring(6);
         }
+
+        public static string OneTest
+        {
+            get { return GetPath("OneTest.dll"); }
+        }
+
         public static string SomeTests
         {
             get { return GetPath("SomeTests.dll"); }

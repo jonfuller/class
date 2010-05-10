@@ -92,7 +92,7 @@ task :growltest do
   growl.notify({
     :name    => num_failed.zero? ? "success" : "failure",
     :title   => num_failed.zero? ? "success" : "failure",
-    :text    => num_failed.zero? ? "way to go!" : failure_mesages,
+    :text    => num_failed.zero? ? "way to go!" : failure_messages,
     :icon    => icon,
     :sticky  => !num_failed.zero?})
 end

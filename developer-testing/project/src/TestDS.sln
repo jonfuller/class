@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomeTests", "SomeTests.dll\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample Test Assemblies", "Sample Test Assemblies", "{C3E313DC-C121-452E-B491-62132979AB58}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneTest", "OneTest\OneTest.csproj", "{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,12 +75,23 @@ Global
 		{969D8DD8-0A9E-478C-9EF7-2D4E2E3277E0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{969D8DD8-0A9E-478C-9EF7-2D4E2E3277E0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{969D8DD8-0A9E-478C-9EF7-2D4E2E3277E0}.Release|x86.ActiveCfg = Release|Any CPU
+		{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{5CF3AEE9-7C0B-436F-BF24-3FFF58FB4DB3} = {C3E313DC-C121-452E-B491-62132979AB58}
 		{969D8DD8-0A9E-478C-9EF7-2D4E2E3277E0} = {C3E313DC-C121-452E-B491-62132979AB58}
+		{5CF3AEE9-7C0B-436F-BF24-3FFF58FB4DB3} = {C3E313DC-C121-452E-B491-62132979AB58}
+		{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612} = {C3E313DC-C121-452E-B491-62132979AB58}
 	EndGlobalSection
 EndGlobal

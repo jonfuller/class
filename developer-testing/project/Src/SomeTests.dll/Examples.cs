@@ -12,12 +12,13 @@
     {
     }
 
-    public class OkTests
-    {
-    }
-
     public enum EnumTests
     {
         Value
+    }
+
+    public class OkTests
+    {
+
     }
 }

@@ -18,31 +18,11 @@ namespace TestDS
                    {
                        TestContainers = asm
                         .GetTypes()
-                        .Where(t => t.Name.EndsWith("tests", StringComparison.CurrentCultureIgnoreCase))
+                        .Where(t => t.Name.EndsWith("tests", StringComparison.InvariantCultureIgnoreCase))
                         .Where(t => !t.IsAbstract)
                         .Where(t => !t.IsEnum)
                         .Select(t => new ClassContainer(t))
                    };
-        }
-    }
-
-    public class ClassContainer : ITestContainer
-    {
-        private readonly Type _type;
-
-        public ClassContainer(Type type)
-        {
-            _type = type;
-        }
-
-        public RunResult Run()
-        {
-            return new RunResult();
-        }
-
-        public string Name
-        {
-            get { return _type.Name; }
         }
     }
 }

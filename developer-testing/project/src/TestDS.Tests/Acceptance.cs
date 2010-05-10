@@ -11,13 +11,13 @@ namespace TestDS.Tests
             exitCode = application.Start();
 
         It should_report_assembly_loaded = () =>
-            output.ShouldContain("Loaded: AssemblyWithNoTests.dll");
+            output.ShouldContain("Loaded: NoTests.dll");
 
-        It should_report_one_test_found;/* = () =>
-            output.ShouldEqual(@"1 test(s) loaded.");*/
+        It should_report_one_test_found = () =>
+            output.ShouldEqual(@"1 test(s) loaded.");
 
-        It should_output_success_value = () =>
-            exitCode.ShouldBeTrue();
+        //It should_output_success_value = () =>
+        //    exitCode.ShouldBeTrue();
     }
 
     [Subject("Acceptance")]
@@ -27,7 +27,7 @@ namespace TestDS.Tests
             exitCode = application.Start();
 
         It should_report_assembly_loaded = () =>
-            output.ShouldContain("Loaded: AssemblyWithNoTests.dll");
+            output.ShouldContain("Loaded: NoTests.dll");
 
         It should_report_no_tests_found = () =>
             output.ShouldContain("No tests loaded.");
@@ -46,7 +46,7 @@ namespace TestDS.Tests
         private Establish context = () =>
         {
             outputStream = new StringWriter();
-            application = new Application(outputStream, new[] { "AssemblyWithNoTests.dll" });
+            application = new Application(outputStream, new[] { Assemblies.NoTests });
         };
     }
 
