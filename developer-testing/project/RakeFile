@@ -1,5 +1,6 @@
 require 'albacore'
 require 'rexml/document'
+require 'ruby_gntp'
 
 task :default => %W(build)
 task :build, :needs => [:clean, :debug_config, :msbuild, :mspec]
@@ -81,7 +82,19 @@ task :growltest do
   end.join("\n")
 
   message = "#{num_passed} passed, #{num_failed} failed.\n#{failure_messages}"
-  system "ext/growl/g.exe \"#{message}\" /i:\"#{icon}\""
+
+  growl = GNTP.new("watchr growlr")
+  growl.register({:notifications => [
+    {:name    => "success",
+     :enabled => true},
+    {:name    => "failure",
+     :enabled => true}]})
+  growl.notify({
+    :name    => num_failed.zero? ? "success" : "failure",
+    :title   => num_failed.zero? ? "success" : "failure",
+    :text    => num_failed.zero? ? "way to go!" : failure_mesages,
+    :icon    => icon,
+    :sticky  => !num_failed.zero?})
 end
 
 task :mspec do
