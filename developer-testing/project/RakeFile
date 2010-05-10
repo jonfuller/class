@@ -1,5 +1,5 @@
 require 'albacore'
-require 'hpricot'
+require 'rexml/document'
 
 task :default => %W(build)
 task :build, :needs => [:clean, :debug_config, :msbuild, :mspec]
@@ -61,10 +61,9 @@ assemblyinfo :assemblyinfo, :needs =>[:version] do |asm|
 end
 
 task :growltest do
-  doc = open('results.xml'){|f| Hpricot(f)}
-  doc.search("//specification")
-  failed = doc.search("//specification[@status='failed']")
-  passed = doc.search("//specification[@status='passed']")
+  doc = open('results.xml'){|f| REXML::Document.new(f)}
+  passed = doc.get_elements("//specification[@status='passed']")
+  failed = doc.get_elements("//specification[@status='failed']")
 
   num_passed = passed.length
   num_failed = failed.length
@@ -72,13 +71,19 @@ task :growltest do
   img = num_failed.zero? ? 'green' : 'red'
   icon = "#{File.join(File.expand_path('.'), 'ext', 'growl', img)}.png"
 
-  failure_messages = failed.map{|f| f.parent["name"] + ": " + f["name"]}.join("\n")
+  failure_tree = failed.inject({}) do |memo, item|
+    memo[item.parent.attributes["name"]] ||= []
+    memo[item.parent.attributes["name"]] << item.attributes["name"]
+    memo
+  end
+  failure_messages = failure_tree.map() do |parent, item|
+    ([parent] + item.map{|i| "   "+i}).join("\n")
+  end.join("\n")
+
   message = "#{num_passed} passed, #{num_failed} failed.\n#{failure_messages}"
   system "ext/growl/g.exe \"#{message}\" /i:\"#{icon}\""
 end
 
-mspec do |mspec|
-  mspec.path_to_command = 'ext/mspec/mspec.exe'
-  mspec.assemblies = Dir.glob('src/**/bin/**/*Tests*.dll')
-  mspec.options "--xml #{File.expand_path('.')}/results.xml"
+task :mspec do
+  system("ext/mspec/mspec.exe --xml #{File.expand_path('.')}/results.xml #{Dir.glob('src/**/bin/**/TestDS.Tests*.dll').join(' ')}")
 end
