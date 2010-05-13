@@ -6,10 +6,6 @@ namespace TestDS
 {
     public class AssemblyTestLoader
     {
-        public AssemblyTestLoader()
-        {
-        }
-
         public TestSuite Load(string assemblyName)
         {
             var asm = Assembly.LoadFile(assemblyName);

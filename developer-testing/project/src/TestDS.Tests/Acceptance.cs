@@ -8,29 +8,40 @@ namespace TestDS.Tests
     public class Running_Suite_With_A_Test : ApplicationSpecs
     {
         Because of = () =>
-            exitCode = application.Start();
+            exitCode = application.Start(Assemblies.OneTest);
 
         It should_report_assembly_loaded = () =>
-            output.ShouldContain("Loaded: NoTests.dll");
+            output.ShouldContain("Loaded: OneTest.dll");
 
         It should_report_one_test_found = () =>
-            output.ShouldEqual(@"1 test(s) loaded.");
+            output.ShouldContain(@"1 test(s) loaded.");
+
+        It should_report_one_test_out_of_one_test_passed = () =>
+            output.ShouldContain(@"1/1 test(s) passed");
+
+        It should_report_zero_failures = () =>
+            output.ShouldContain(@"0 failures");
+
+        It should_output_success_value = () =>
+            exitCode.ShouldBeTrue();
+    }
+
 
         //It should_output_success_value = () =>
         //    exitCode.ShouldBeTrue();
     }
 
     [Subject("Acceptance")]
-    public class running_with_no_tests : ApplicationSpecs
+    public class Running_Suite_With_NoTests : ApplicationSpecs
     {
         Because of = () =>
-            exitCode = application.Start();
+            exitCode = application.Start(Assemblies.NoTests);
 
         It should_report_assembly_loaded = () =>
             output.ShouldContain("Loaded: NoTests.dll");
 
         It should_report_no_tests_found = () =>
-            output.ShouldContain("No tests loaded.");
+            output.ShouldContain("0 test(s) loaded.");
 
         It should_output_success_value = () =>
             exitCode.ShouldBeTrue();
@@ -46,7 +57,7 @@ namespace TestDS.Tests
         private Establish context = () =>
         {
             outputStream = new StringWriter();
-            application = new Application(outputStream, new[] { Assemblies.NoTests });
+            application = new Application(outputStream);
         };
     }
 

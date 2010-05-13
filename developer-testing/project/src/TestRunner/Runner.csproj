@@ -47,6 +47,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OneTest\OneTest.csproj">
+      <Project>{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}</Project>
+      <Name>OneTest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TestDS\TestDS.csproj">
       <Project>{A5AA2E61-A40C-414E-B180-48EB185DE35E}</Project>
       <Name>TestDS</Name>

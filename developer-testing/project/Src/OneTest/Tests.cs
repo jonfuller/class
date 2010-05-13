@@ -2,7 +2,7 @@
 {
     public class Tests
     {
-        public void TestWhatever()
+        public void WhateverTest()
         { 
         }
     }

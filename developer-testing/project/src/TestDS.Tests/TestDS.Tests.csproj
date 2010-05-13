@@ -54,6 +54,10 @@
       <Project>{5CF3AEE9-7C0B-436F-BF24-3FFF58FB4DB3}</Project>
       <Name>NoTests</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OneTest\OneTest.csproj">
+      <Project>{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}</Project>
+      <Name>OneTest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SomeTests.dll\SomeTests.csproj">
       <Project>{969D8DD8-0A9E-478C-9EF7-2D4E2E3277E0}</Project>
       <Name>SomeTests</Name>

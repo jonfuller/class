@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Machine.Specifications;
 
 namespace TestDS.Tests
@@ -23,7 +20,7 @@ namespace TestDS.Tests
         It should_load_methods_that_have_no_arguments = () =>
             TheContainer.TestCases.None(test => test.Name == "HasArgumentsTest").ShouldBeTrue();
 
-        It should_load_not_load_methods_that_have_generic_arguments = () =>
+        It should_not_load_methods_that_have_generic_arguments = () =>
             TheContainer.TestCases.None(test => test.Name == "GenericTest").ShouldBeTrue();
     }
 
