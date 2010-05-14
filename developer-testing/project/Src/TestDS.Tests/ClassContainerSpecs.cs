@@ -80,29 +80,30 @@ namespace TestDS.Tests
 
         Establish context = () =>
             TheContainer = new ClassContainer(typeof(SampleContainer));
+
+        internal class SampleContainer
+        {
+            public void WhateverTest()
+            {
+            }
+
+            void NonPublicTest()
+            {
+            }
+
+            public int ReturnsIntTest()
+            {
+                return 1;
+            }
+
+            public void HasArgumentsTest(int arg)
+            {
+            }
+
+            public void GenericTest<T>()
+            {
+            }
+        }
     }
 
-    internal class SampleContainer
-    {
-        public void WhateverTest()
-        {
-        }
-
-        void NonPublicTest()
-        {
-        }
-
-        public int ReturnsIntTest()
-        {
-            return 1;
-        }
-
-        public void HasArgumentsTest(int arg)
-        {
-        }
-
-        public void GenericTest<T>()
-        {
-        }
-    }
 }
