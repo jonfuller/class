@@ -11,7 +11,7 @@ namespace TestDS.Tests
             exitCode = application.Start(Assemblies.OneTest);
 
         It should_report_assembly_loaded = () =>
-            output.ShouldContain("Loaded: OneTest.dll");
+            output.ShouldContain("Loaded: OneTest");
 
         It should_report_one_test_found = () =>
             output.ShouldContain(@"1 test(s) loaded.");
@@ -21,6 +21,9 @@ namespace TestDS.Tests
 
         It should_report_zero_failures = () =>
             output.ShouldContain(@"0 failures");
+
+        It should_not_have_failures_section = () =>
+            output.ShouldNotContain("Failures:");
 
         It should_output_success_value = () =>
             exitCode.ShouldBeTrue();
@@ -61,7 +64,7 @@ namespace TestDS.Tests
             exitCode = application.Start(Assemblies.NoTests);
 
         It should_report_assembly_loaded = () =>
-            output.ShouldContain("Loaded: NoTests.dll");
+            output.ShouldContain("Loaded: NoTests");
 
         It should_report_no_tests_found = () =>
             output.ShouldContain("0 test(s) loaded.");

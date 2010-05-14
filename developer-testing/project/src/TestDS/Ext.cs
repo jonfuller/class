@@ -37,5 +37,10 @@ namespace TestDS
         {
             return string.Format(format, args);
         }
+
+        public static string Join(this IEnumerable<string> target, string separator)
+        {
+            return string.Join(separator, target);
+        }
     }
 }

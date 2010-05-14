@@ -47,9 +47,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OneFailingTest\OneFailingTest.csproj">
+      <Project>{3152C700-911D-4FA3-A4A9-13D7C31F8960}</Project>
+      <Name>OneFailingTest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OneTest\OneTest.csproj">
       <Project>{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}</Project>
       <Name>OneTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SomeTests.dll\SomeTests.csproj">
+      <Project>{969D8DD8-0A9E-478C-9EF7-2D4E2E3277E0}</Project>
+      <Name>SomeTests</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestDS\TestDS.csproj">
       <Project>{A5AA2E61-A40C-414E-B180-48EB185DE35E}</Project>

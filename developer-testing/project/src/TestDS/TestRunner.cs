@@ -1,10 +1,16 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace TestDS
 {
     public class TestRunner
     {
-        public SuiteRunResult Run(TestSuite theSuite)
+        public IEnumerable<SuiteRunResult> Run(IEnumerable<TestSuite> theSuites)
+        {
+            return theSuites.Select(RunSuite);
+        }
+
+        private static SuiteRunResult RunSuite(TestSuite theSuite)
         {
             return theSuite
                 .TestContainers
@@ -13,6 +19,7 @@ namespace TestDS
                     new SuiteRunResult { Name = theSuite.Name, Results = Enumerable.Empty<ContainerRunResult>() },
                     (state, current) => new SuiteRunResult()
                     {
+                        Name = state.Name,
                         Results = state.Results.Concat(current.Result)
                     });
         }

@@ -32,30 +32,34 @@ namespace Runner
             _output = output;
         }
 
-        public bool Start(string assemblyName)
+        public bool Start(params string[] assemblyNames)
         {
             var loader = new AssemblyTestLoader();
-            var suite = loader.Load(assemblyName);
+            var suites = loader.Load(assemblyNames);
 
-            var executed = new TestRunner().Run(suite);
-            var total = executed.Passes + executed.Failures;
+            var executed = new TestRunner().Run(suites);
+            var totalPasses = executed.Sum(x => x.Passes);
+            var totalFailures = executed.Sum(x => x.Failures);
+            var total = totalPasses + totalFailures;
 
-            _output.WriteLine("Loaded: {0}".FormatWith(Path.GetFileName(assemblyName)));
+            _output.WriteLine("Loaded: {0}".FormatWith(suites.Select(s => s.Name).Join(", ")));
             _output.WriteLine("  {0} test(s) loaded.".FormatWith(total));
-            _output.WriteLine("  {0}/{1} test(s) passed ({2} failures).".FormatWith(executed.Passes, total, executed.Failures));
-            _output.WriteLine("Failures: ");
-            executed
+            _output.WriteLine("  {0}/{1} test(s) passed ({2} failures).".FormatWith(totalPasses, total, totalFailures));
+            
+            if (totalFailures > 0 )
+                _output.WriteLine("Failures: ");
+            executed.Each(suiteResult => suiteResult
                 .Results
                 .Where(containerResult => containerResult.Results.Any(r => !r.Pass))
                 .Each(f =>
                 {
-                    _output.WriteLine("  Container {0} in suite {1} contained {2} failures.".FormatWith(f.Name, suite.Name, f.Failures));
+                    _output.WriteLine("  {0}.{1} contained {2} failures.".FormatWith(suiteResult.Name, f.Name, f.Failures));
                     f.Results.Where(r => !r.Pass).Each(r => _output.WriteLine("    {0} failed. [{1}]".FormatWith(r.Name, r.Message)));
-                });
+                }));
 
             _output.Flush();
             
-            return executed.Failures == 0;
+            return totalFailures == 0;
         }
     }
 }

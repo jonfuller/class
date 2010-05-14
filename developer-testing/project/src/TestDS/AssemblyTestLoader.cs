@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -6,20 +7,24 @@ namespace TestDS
 {
     public class AssemblyTestLoader
     {
-        public TestSuite Load(string assemblyName)
+        public IEnumerable<TestSuite> Load(IEnumerable<string> assemblyNames)
         {
-            var asm = Assembly.LoadFile(assemblyName);
-
-            return new TestSuite()
-                   {
-                       TestContainers = asm
-                        .GetTypes()
-                        .Where(t => t.Name.EndsWith("tests", StringComparison.InvariantCultureIgnoreCase))
-                        .Where(t => !t.IsAbstract)
-                        .Where(t => !t.IsEnum)
-                        .Where(t => t.GetConstructor(new Type[]{}) != null)
-                        .Select(t => new ClassContainer(t))
-                   };
+            return assemblyNames
+                .Select(Assembly.LoadFrom)
+                .Select(asm =>
+                    new TestSuite()
+                    {
+                        Name = asm.GetName().Name,
+                        TestContainers = asm
+                            .GetTypes()
+                            .Where(t => t.Name.EndsWith("tests", StringComparison.InvariantCultureIgnoreCase))
+                            .Where(t => !t.IsAbstract)
+                            .Where(t => !t.IsEnum)
+                            .Where(t => t.GetConstructor(new Type[] { }) != null)
+                            .Select(t => new ClassContainer(t))
+                    })
+                .Eval()
+                ;
         }
     }
 }

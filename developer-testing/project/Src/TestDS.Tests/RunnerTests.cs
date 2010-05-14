@@ -1,8 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Machine.Specifications;
 
 namespace TestDS.Tests
 {
+    [Subject("Test Runner")]
+    public class Running_Multiple_Suites : RunnerSpecs
+    {
+        Establish context = () =>
+            TheSuites = Suites.NoTests.Concat(Suites.OnePassingTest).Concat(Suites.OnePassingTestOneFailingTest);
+
+        Because of = () =>
+            Results = Runner.Run(TheSuites);
+
+        It should_result_in_two_passing = () =>
+            Results.Sum(x => x.Passes).ShouldEqual(2);
+
+        It should_result_in_one_failing = () =>
+            Results.Sum(x => x.Failures).ShouldEqual(1);
+    }
+
     [Subject("Test Runner")]
     public class Running_Suite_With_No_Tests : RunnerSpecs
     {
@@ -10,13 +27,13 @@ namespace TestDS.Tests
             TheSuite = Suites.NoTests;
 
         Because of = () =>
-            Result = Runner.Run(TheSuite);
+            Results = Runner.Run(TheSuite);
 
-        It should_tell_tracker_zero_passing = () =>
-            Result.Passes.ShouldEqual(0);
+        It should_result_in_zero_passing = () =>
+            Results.Sum(x => x.Passes).ShouldEqual(0);
 
-        It should_tell_tracker_zero_failing = () =>
-            Result.Failures.ShouldEqual(0);
+        It should_result_in_zero_failing = () =>
+            Results.Sum(x => x.Failures).ShouldEqual(0);
     }
 
     [Subject("Test Runner")]
@@ -26,13 +43,13 @@ namespace TestDS.Tests
             TheSuite = Suites.OnePassingTest;
 
         Because of = () =>
-            Result = Runner.Run(TheSuite);
+            Results = Runner.Run(TheSuite);
 
-        It should_tell_tracker_one_passing = () =>
-            Result.Passes.ShouldEqual(1);
+        It should_result_in_one_passing = () =>
+            Results.Sum(x => x.Passes).ShouldEqual(1);
 
-        It should_tell_tracker_zero_failing = () =>
-            Result.Failures.ShouldEqual(0);
+        It should_result_in_zero_failing = () =>
+            Results.Sum(x => x.Failures).ShouldEqual(0);
     }
 
     [Subject("Test Runner")]
@@ -42,20 +59,21 @@ namespace TestDS.Tests
             TheSuite = Suites.OnePassingTestOneFailingTest;
 
         Because of = () =>
-            Result = Runner.Run(TheSuite);
+            Results = Runner.Run(TheSuite);
 
-        It should_tell_tracker_one_passing = () =>
-            Result.Passes.ShouldEqual(1);
+        It should_result_in_one_passing = () =>
+            Results.Sum(x => x.Passes).ShouldEqual(1);
 
-        It should_tell_tracker_zero_failing = () =>
-            Result.Failures.ShouldEqual(1);
+        It should_result_in_zero_failing = () =>
+            Results.Sum(x => x.Failures).ShouldEqual(1);
     }
 
     public abstract class RunnerSpecs
     {
         protected static TestRunner Runner;
-        protected static TestSuite TheSuite;
-        protected static SuiteRunResult Result;
+        protected static IEnumerable<TestSuite> TheSuites;
+        protected static IEnumerable<TestSuite> TheSuite;
+        protected static IEnumerable<SuiteRunResult> Results;
 
         Establish context =() =>
                            {
@@ -65,37 +83,37 @@ namespace TestDS.Tests
 
     public static class Suites
     {
-        public static TestSuite NoTests
+        public static IEnumerable<TestSuite> NoTests
         {
             get
             {
-                return new TestSuite();
+                return new []{ new TestSuite() };
             }
         }
 
-        public static TestSuite OnePassingTest
+        public static IEnumerable<TestSuite> OnePassingTest
         {
             get
             {
-                return new TestSuite()
+                return new []{ new TestSuite()
                 {
                     TestContainers = new[]{new PassingTestContainer()}
-                };
+                }};
             }
         }
 
-        public static TestSuite OnePassingTestOneFailingTest
+        public static IEnumerable<TestSuite> OnePassingTestOneFailingTest
         {
             get
             {
-                return new TestSuite()
+                return new []{ new TestSuite()
                 {
                     TestContainers = new ITestContainer[]
                     {
                         new PassingTestContainer(),
                         new FailingTestContainer()
                     }
-                };
+                }};
             }
         }
     }

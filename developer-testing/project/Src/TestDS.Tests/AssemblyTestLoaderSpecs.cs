@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Machine.Specifications;
@@ -9,7 +10,7 @@ namespace TestDS.Tests
     public class loading_an_assembly : AssemblyTestLoaderSpecs
     {
         Because of = () =>
-            loadedSuite = TheLoader.Load(Assemblies.SomeTests);
+            loadedSuites = TheLoader.Load(Assemblies.SomeTests);
 
         It should_load_containers_ending_with_the_word_tests = () => {
             loadedSuite.TestContainers.All(c => c.Name.ToLower().EndsWith("tests"));
@@ -36,7 +37,7 @@ namespace TestDS.Tests
     public class loading_an_assembly_with_no_tests : AssemblyTestLoaderSpecs
     {
         Because of = () =>
-            loadedSuite = TheLoader.Load(Assemblies.NoTests);
+            loadedSuites = TheLoader.Load(Assemblies.NoTests);
 
         It should_load_an_empty_suite = () =>
             loadedSuite.TestContainers.Count().ShouldEqual(0);
@@ -44,7 +45,8 @@ namespace TestDS.Tests
 
     public abstract class AssemblyTestLoaderSpecs
     {
-        protected static TestSuite loadedSuite;
+        protected static IEnumerable<TestSuite> loadedSuites;
+        protected static TestSuite loadedSuite { get { return loadedSuites.First(); } }
         protected static AssemblyTestLoader TheLoader;
 
         Establish context = () =>
@@ -53,30 +55,30 @@ namespace TestDS.Tests
 
     public static class Assemblies
     {
-        private static string GetPath(string assemblyName)
+        private static string[] GetPath(string assemblyName)
         {
-            return Path.Combine(
+            return new[] {Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase),
                 assemblyName)
-                .Substring(6);
+                .Substring(6)};
         }
 
-        public static string OneTest
+        public static string[] OneTest
         {
             get { return GetPath("OneTest.dll"); }
         }
 
-        public static string SomeTests
+        public static string[] SomeTests
         {
             get { return GetPath("SomeTests.dll"); }
         }
 
-        public static string NoTests
+        public static string[] NoTests
         {
             get { return GetPath("NoTests.dll"); }
         }
 
-        public static string OneFailingTest
+        public static string[] OneFailingTest
         {
             get { return GetPath("OneFailingTest.dll"); }
         }
