@@ -36,7 +36,6 @@ namespace Runner
         {
             var loader = new AssemblyTestLoader();
             var suite = loader.Load(assemblyName);
-            var numLoaded = suite.TestContainers.Sum(container => container.TestCases.Count());
 
             var executed = suite
                 .TestContainers
@@ -48,13 +47,14 @@ namespace Runner
                                             Passes = state.Passes + current.Passes,
                                             Failures = state.Failures + current.Failures
                                         });
+            var total = executed.Failures + executed.Passes;
 
             _output.WriteLine("Loaded: {0}".FormatWith(Path.GetFileName(assemblyName)));
-            _output.WriteLine("  {0} test(s) loaded.".FormatWith(numLoaded));
-            _output.WriteLine("  {0}/{1} test(s) passed ({2} failures).".FormatWith(executed.Passes, numLoaded, executed.Failures));
+            _output.WriteLine("  {0} test(s) loaded.".FormatWith(total));
+            _output.WriteLine("  {0}/{1} test(s) passed ({2} failures).".FormatWith(executed.Passes, total, executed.Failures));
             _output.Flush();
             
-            return true;
+            return executed.Failures == 0;
         }
     }
 }

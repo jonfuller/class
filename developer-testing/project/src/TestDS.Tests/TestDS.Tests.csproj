@@ -46,6 +46,7 @@
     <Compile Include="Acceptance.cs" />
     <Compile Include="AssemblyTestLoaderSpecs.cs" />
     <Compile Include="ClassContainerSpecs.cs" />
+    <Compile Include="ClassTestCaseSpecs.cs" />
     <Compile Include="RunnerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,6 +54,10 @@
     <ProjectReference Include="..\NoTests.dll\NoTests.csproj">
       <Project>{5CF3AEE9-7C0B-436F-BF24-3FFF58FB4DB3}</Project>
       <Name>NoTests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OneFailingTest\OneFailingTest.csproj">
+      <Project>{3152C700-911D-4FA3-A4A9-13D7C31F8960}</Project>
+      <Name>OneFailingTest</Name>
     </ProjectReference>
     <ProjectReference Include="..\OneTest\OneTest.csproj">
       <Project>{B58CE266-3FFD-4E6C-AC43-AB7ED6F6B612}</Project>

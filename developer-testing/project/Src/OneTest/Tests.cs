@@ -3,7 +3,7 @@
     public class Tests
     {
         public void WhateverTest()
-        { 
+        {
         }
     }
 }

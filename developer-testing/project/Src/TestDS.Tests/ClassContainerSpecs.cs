@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Machine.Specifications;
 
 namespace TestDS.Tests
@@ -23,6 +24,55 @@ namespace TestDS.Tests
         It should_not_load_methods_that_have_generic_arguments = () =>
             TheContainer.TestCases.None(test => test.Name == "GenericTest").ShouldBeTrue();
     }
+
+    [Subject("Class Container")]
+    public class running_a_passing_class : ClassContainerSpecs
+    {
+        static RunResult result;
+
+        Because of = () =>
+            result = new ClassContainer(typeof(PassingContainer)).Run();
+
+        It should_result_in_success = () =>
+            result.Passes.ShouldEqual(1);
+
+        It should_not_result_in_failure = () =>
+            result.Failures.ShouldEqual(0);
+
+        private class PassingContainer
+        {
+            public void SomethingTest()
+            {
+            }
+        }
+    }
+
+    [Subject("Class Container")]
+    public class running_a_failing_class : ClassContainerSpecs
+    {
+        static RunResult result;
+        static Exception exception;
+
+        Because of = ()=>
+            exception = Catch.Exception(() => result = new ClassContainer(typeof(FailingContainer)).Run());
+
+        It should_not_throw = () =>
+            exception.ShouldBeNull();
+
+        It should_result_in_failure = () =>
+            result.Failures.ShouldEqual(1);
+
+        It should_not_result_in_success = () =>
+            result.Passes.ShouldEqual(0);
+
+        private class FailingContainer
+        {
+            public void FailingTest()
+            {
+                throw new AssertionException();
+            }
+        }
+}
 
     public abstract class ClassContainerSpecs
     {

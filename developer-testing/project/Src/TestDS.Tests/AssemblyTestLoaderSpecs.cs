@@ -75,5 +75,10 @@ namespace TestDS.Tests
         {
             get { return GetPath("NoTests.dll"); }
         }
+
+        public static string OneFailingTest
+        {
+            get { return GetPath("OneFailingTest.dll"); }
+        }
     }
 }

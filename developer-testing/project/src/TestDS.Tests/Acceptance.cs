@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Machine.Specifications;
 using Runner;
 
@@ -26,9 +27,20 @@ namespace TestDS.Tests
             exitCode.ShouldBeTrue();
     }
 
+    [Subject("Acceptance")]
+    public class Running_Suite_With_A_Failing_Test : ApplicationSpecs
+    {
+        Because of = () =>
+            exitCode = application.Start(Assemblies.OneFailingTest);
 
-        //It should_output_success_value = () =>
-        //    exitCode.ShouldBeTrue();
+        It should_report_zero_tesst_out_of_one_test_passed = () =>
+            output.ShouldContain(@"0/1 test(s) passed");
+
+        It should_report_one_test_out_of_one_failed = () =>
+            output.ShouldContain(@"1 failures");
+
+        It should_output_failure_value = () =>
+            exitCode.ShouldBeFalse();
     }
 
     [Subject("Acceptance")]

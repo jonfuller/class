@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A5AA2E61-A40C-414E-B180-48EB185DE35E}</ProjectGuid>
+    <ProjectGuid>{3152C700-911D-4FA3-A4A9-13D7C31F8960}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestDS</RootNamespace>
-    <AssemblyName>TestDS</AssemblyName>
+    <RootNamespace>OneFailingTest</RootNamespace>
+    <AssemblyName>OneFailingTest</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,17 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyTestLoader.cs" />
-    <Compile Include="AssertionException.cs" />
-    <Compile Include="ClassContainer.cs" />
-    <Compile Include="Ext.cs" />
-    <Compile Include="ITestCase.cs" />
-    <Compile Include="ITestContainer.cs" />
+    <Compile Include="FailingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RunResult.cs" />
-    <Compile Include="TestRunner.cs" />
-    <Compile Include="TestSuite.cs" />
-    <Compile Include="TestTracker.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TestDS\TestDS.csproj">
+      <Project>{A5AA2E61-A40C-414E-B180-48EB185DE35E}</Project>
+      <Name>TestDS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
