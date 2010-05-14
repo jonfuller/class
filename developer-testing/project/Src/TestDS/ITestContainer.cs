@@ -5,7 +5,7 @@ namespace TestDS
     public interface ITestContainer
     {
         IEnumerable<ITestCase> TestCases { get; }
-        RunResult Run();
+        ContainerRunResult Run();
         string Name { get; }
     }
 }

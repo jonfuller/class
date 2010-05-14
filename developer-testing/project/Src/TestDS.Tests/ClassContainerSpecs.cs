@@ -28,7 +28,7 @@ namespace TestDS.Tests
     [Subject("Class Container")]
     public class running_a_passing_class : ClassContainerSpecs
     {
-        static RunResult result;
+        static ContainerRunResult result;
 
         Because of = () =>
             result = new ClassContainer(typeof(PassingContainer)).Run();
@@ -50,7 +50,7 @@ namespace TestDS.Tests
     [Subject("Class Container")]
     public class running_a_failing_class : ClassContainerSpecs
     {
-        static RunResult result;
+        static ContainerRunResult result;
         static Exception exception;
 
         Because of = ()=>
@@ -69,7 +69,7 @@ namespace TestDS.Tests
         {
             public void FailingTest()
             {
-                throw new AssertionException();
+                throw new AssertionException("whateva!");
             }
         }
 }

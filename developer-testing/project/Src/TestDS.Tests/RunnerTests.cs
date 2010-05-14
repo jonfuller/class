@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Machine.Specifications;
 
 namespace TestDS.Tests
@@ -16,7 +17,7 @@ namespace TestDS.Tests
             Result.Passes.ShouldEqual(0);
 
         It should_tell_tracker_zero_failing = () =>
-            Result.Failures.ShouldEqual(0);
+            Result.Failures.Count().ShouldEqual(0);
     }
 
     [Subject("Test Runner")]
@@ -32,7 +33,7 @@ namespace TestDS.Tests
             Result.Passes.ShouldEqual(1);
 
         It should_tell_tracker_zero_failing = () =>
-            Result.Failures.ShouldEqual(0);
+            Result.Failures.Count().ShouldEqual(0);
     }
 
     [Subject("Test Runner")]
@@ -48,14 +49,14 @@ namespace TestDS.Tests
             Result.Passes.ShouldEqual(1);
 
         It should_tell_tracker_zero_failing = () =>
-            Result.Failures.ShouldEqual(1);
+            Result.Failures.Count().ShouldEqual(1);
     }
 
     public abstract class RunnerSpecs
     {
         protected static TestRunner Runner;
         protected static TestSuite TheSuite;
-        protected static RunResult Result;
+        protected static SuiteRunResult Result;
 
         Establish context =() =>
                            {
@@ -107,12 +108,15 @@ namespace TestDS.Tests
             get { return new ITestCase[0]; }
         }
 
-        public RunResult Run()
+        public ContainerRunResult Run()
         {
-            return new RunResult()
+            return new ContainerRunResult()
             {
-                Failures = 1,
-                Passes = 0
+                Name = Name,
+                Results = new[]
+                {
+                    new TestCaseResult(){Pass = false, Message = "yo"}
+                }
             };
         }
 
@@ -129,13 +133,16 @@ namespace TestDS.Tests
             get { return new ITestCase[0]; }
         }
 
-        public RunResult Run()
+        public ContainerRunResult Run()
         {
-            return new RunResult()
-                       {
-                           Failures = 0,
-                           Passes = 1
-                       };
+            return new ContainerRunResult()
+            {
+                Name = Name,
+                Results = new[]
+                {
+                    new TestCaseResult(){Pass = true }
+                }
+            };
         }
 
         public string Name

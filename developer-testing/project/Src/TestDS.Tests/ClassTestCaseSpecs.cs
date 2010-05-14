@@ -6,7 +6,7 @@ namespace TestDS.Tests
     public class running_a_passing_test_case
     {
         static ClassTestCase testCase;
-        static bool result;
+        static TestCaseResult result;
         public static bool testRan;
 
         Establish context = () =>
@@ -16,7 +16,7 @@ namespace TestDS.Tests
             result = testCase.Run();
 
         It should_result_in_success_result = () =>
-            result.ShouldBeTrue();
+            result.Pass.ShouldBeTrue();
 
         It should_actually_run_method = () =>
             testRan.ShouldBeTrue();
@@ -33,7 +33,7 @@ namespace TestDS.Tests
     public class running_a_failing_test_case
     {
         static ClassTestCase testCase;
-        static bool result = true;
+        static TestCaseResult result;
 
         Establish context = () =>
             testCase = new ClassTestCase(typeof(SampleCase), typeof(SampleCase).GetMethod("FailingCase"));
@@ -42,13 +42,13 @@ namespace TestDS.Tests
             result = testCase.Run();
 
         It should_result_in_failure_result = () =>
-            result.ShouldBeFalse();
+            result.Pass.ShouldBeFalse();
 
         private class SampleCase
         {
             public void FailingCase()
             {
-                throw new AssertionException();
+                throw new AssertionException("uh-huh");
             }
         }
     }

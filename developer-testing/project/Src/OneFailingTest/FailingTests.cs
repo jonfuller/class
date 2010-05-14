@@ -2,11 +2,11 @@
 
 namespace OneFailingTest
 {
-    public class FailingTests
+    public class ContainerFailingTests
     {
-        public void FailingTest()
+        public void CaseFailingTest()
         {
-            throw new AssertionException();
+            throw new AssertionException("Bogus!");
         }
     }
 }

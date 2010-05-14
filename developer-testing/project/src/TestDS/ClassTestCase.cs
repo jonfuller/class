@@ -14,18 +14,18 @@ namespace TestDS
             _methodInfo = methodInfo;
         }
 
-        public bool Run()
+        public TestCaseResult Run()
         {
             try
             {
                 var testObj = Activator.CreateInstance(_type);
                 _methodInfo.Invoke(testObj, new object[] { });
-                return true;
+                return new TestCaseResult(){Name=Name, Pass = true};
             }
             catch (TargetInvocationException e)
             {
                 if (e.InnerException != null && e.InnerException is AssertionException)
-                    return false;
+                    return new TestCaseResult(){Name = Name, Pass = false, Message = e.InnerException.Message};
                 throw;
             }
         }

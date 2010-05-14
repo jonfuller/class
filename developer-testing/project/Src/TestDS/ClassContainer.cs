@@ -23,19 +23,36 @@ namespace TestDS
 
         public IEnumerable<ITestCase> TestCases { get { return _testCases; } }
 
-        public RunResult Run()
+        public ContainerRunResult Run()
         {
             return _testCases.Aggregate(
-                new RunResult() {Passes = 0, Failures = 0},
-                (state, testCase) =>
-                    testCase.Run()
-                        ? new RunResult() {Passes = state.Passes + 1, Failures = state.Failures}
-                        : new RunResult() {Passes = state.Passes, Failures = state.Failures + 1});
+                new ContainerRunResult() {Results = new TestCaseResult[] {}},
+                (state, testCase) => new ContainerRunResult
+                {
+                    Name = Name,
+                    Results = state.Results.Concat(testCase.Run())
+                });
         }
 
         public string Name
         {
             get { return _type.Name; }
+        }
+    }
+
+    public class ContainerRunResult
+    {
+        public string Name { get; set; }
+        public IEnumerable<TestCaseResult> Results { get; set; }
+
+        public int Passes
+        {
+            get { return Results.Where(r => r.Pass).Count(); }
+        }
+
+        public int Failures
+        {
+            get { return Results.Where(r => !r.Pass).Count(); }
         }
     }
 }

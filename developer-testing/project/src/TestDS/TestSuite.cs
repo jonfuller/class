@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TestDS
 {
@@ -11,5 +12,7 @@ namespace TestDS
         {
             TestContainers = new ITestContainer[] {};
         }
+
+        public string Name { get; set; }
     }
 }

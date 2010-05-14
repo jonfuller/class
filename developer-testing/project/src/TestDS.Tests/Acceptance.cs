@@ -40,6 +40,18 @@ namespace TestDS.Tests
 
         It should_output_failure_value = () =>
             exitCode.ShouldBeFalse();
+
+        It should_output_failure_message = () =>
+            output.ShouldContain("Bogus!");
+
+        It should_output_failure_suite = () =>
+            output.ShouldContain("OneFailingTest");
+
+        It should_output_failure_container = () =>
+            output.ShouldContain("ContainerFailingTests");
+
+        It should_output_failure_case = () =>
+            output.ShouldContain("CaseFailingTest");
     }
 
     [Subject("Acceptance")]
