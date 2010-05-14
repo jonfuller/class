@@ -21,4 +21,22 @@
     {
 
     }
+
+    public class NonDefaultCtorTests
+    {
+        public NonDefaultCtorTests(int number)
+        {
+        }
+    }
+
+    public class DefaultAndNonDefaultCtorTests
+    {
+        public DefaultAndNonDefaultCtorTests()
+        {
+        }
+
+        public DefaultAndNonDefaultCtorTests(int number)
+        {
+        }
+    }
 }

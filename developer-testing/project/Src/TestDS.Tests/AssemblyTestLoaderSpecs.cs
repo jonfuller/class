@@ -24,6 +24,12 @@ namespace TestDS.Tests
 
         It should_not_load_containers_from_enums = () =>
             loadedSuite.TestContainers.Any(c => c.Name.ToLower().Contains("enum")).ShouldBeFalse();
+
+        It should_not_load_containers_without_default_constructors = () =>
+            loadedSuite.TestContainers.Any(c => c.Name == "NonDefaultCtorTests").ShouldBeFalse();
+
+        It should_load_containers_with_default_and_other_constructors = () =>
+            loadedSuite.TestContainers.Any(c => c.Name.ToLower().Contains("defaultandnondefaultctortests")).ShouldBeTrue();
     }
 
     [Subject("Assembly loader")]

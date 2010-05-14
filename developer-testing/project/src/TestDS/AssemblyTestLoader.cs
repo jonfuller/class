@@ -17,6 +17,7 @@ namespace TestDS
                         .Where(t => t.Name.EndsWith("tests", StringComparison.InvariantCultureIgnoreCase))
                         .Where(t => !t.IsAbstract)
                         .Where(t => !t.IsEnum)
+                        .Where(t => t.GetConstructor(new Type[]{}) != null)
                         .Select(t => new ClassContainer(t))
                    };
         }
