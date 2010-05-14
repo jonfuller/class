@@ -38,21 +38,24 @@ namespace Runner
             var suite = loader.Load(assemblyName);
 
             var executed = new TestRunner().Run(suite);
-            var total = executed.Passes + executed.Failures.Count();
+            var total = executed.Passes + executed.Failures;
 
             _output.WriteLine("Loaded: {0}".FormatWith(Path.GetFileName(assemblyName)));
             _output.WriteLine("  {0} test(s) loaded.".FormatWith(total));
-            _output.WriteLine("  {0}/{1} test(s) passed ({2} failures).".FormatWith(executed.Passes, total, executed.Failures.Count()));
+            _output.WriteLine("  {0}/{1} test(s) passed ({2} failures).".FormatWith(executed.Passes, total, executed.Failures));
             _output.WriteLine("Failures: ");
-            executed.Failures.Each(f =>
-            {
-                _output.WriteLine("  Container {0} in suite {1} contained {2} failures.".FormatWith(f.Name, suite.Name, f.Failures.Count()));
-                f.Failures.Each(r => _output.WriteLine("    {0} failed. [{1}]".FormatWith(r.Name, r.Message)));
-            });
+            executed
+                .Results
+                .Where(containerResult => containerResult.Results.Any(r => !r.Pass))
+                .Each(f =>
+                {
+                    _output.WriteLine("  Container {0} in suite {1} contained {2} failures.".FormatWith(f.Name, suite.Name, f.Failures));
+                    f.Results.Where(r => !r.Pass).Each(r => _output.WriteLine("    {0} failed. [{1}]".FormatWith(r.Name, r.Message)));
+                });
 
             _output.Flush();
             
-            return executed.Failures.Count() == 0;
+            return executed.Failures == 0;
         }
     }
 }

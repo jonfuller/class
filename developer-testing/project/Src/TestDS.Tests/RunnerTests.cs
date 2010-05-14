@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Machine.Specifications;
 
 namespace TestDS.Tests
@@ -17,7 +16,7 @@ namespace TestDS.Tests
             Result.Passes.ShouldEqual(0);
 
         It should_tell_tracker_zero_failing = () =>
-            Result.Failures.Count().ShouldEqual(0);
+            Result.Failures.ShouldEqual(0);
     }
 
     [Subject("Test Runner")]
@@ -33,7 +32,7 @@ namespace TestDS.Tests
             Result.Passes.ShouldEqual(1);
 
         It should_tell_tracker_zero_failing = () =>
-            Result.Failures.Count().ShouldEqual(0);
+            Result.Failures.ShouldEqual(0);
     }
 
     [Subject("Test Runner")]
@@ -49,7 +48,7 @@ namespace TestDS.Tests
             Result.Passes.ShouldEqual(1);
 
         It should_tell_tracker_zero_failing = () =>
-            Result.Failures.Count().ShouldEqual(1);
+            Result.Failures.ShouldEqual(1);
     }
 
     public abstract class RunnerSpecs

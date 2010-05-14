@@ -7,7 +7,7 @@ namespace TestDS
     public class ClassContainer : ITestContainer
     {
         private readonly Type _type;
-        private IEnumerable<ClassTestCase> _testCases;
+        private readonly IEnumerable<ClassTestCase> _testCases;
 
         public ClassContainer(Type type)
         {
@@ -22,37 +22,20 @@ namespace TestDS
         }
 
         public IEnumerable<ITestCase> TestCases { get { return _testCases; } }
+        public string Name
+        {
+            get { return _type.Name; }
+        }
 
         public ContainerRunResult Run()
         {
             return _testCases.Aggregate(
-                new ContainerRunResult() {Results = new TestCaseResult[] {}},
+                new ContainerRunResult() {Results = Enumerable.Empty<TestCaseResult>()},
                 (state, testCase) => new ContainerRunResult
                 {
                     Name = Name,
                     Results = state.Results.Concat(testCase.Run())
                 });
-        }
-
-        public string Name
-        {
-            get { return _type.Name; }
-        }
-    }
-
-    public class ContainerRunResult
-    {
-        public string Name { get; set; }
-        public IEnumerable<TestCaseResult> Results { get; set; }
-
-        public int Passes
-        {
-            get { return Results.Where(r => r.Pass).Count(); }
-        }
-
-        public int Failures
-        {
-            get { return Results.Where(r => !r.Pass).Count(); }
         }
     }
 }

@@ -44,11 +44,13 @@
     <Compile Include="AssertionException.cs" />
     <Compile Include="ClassContainer.cs" />
     <Compile Include="ClassTestCase.cs" />
+    <Compile Include="ContainerRunResult.cs" />
     <Compile Include="Ext.cs" />
     <Compile Include="ITestCase.cs" />
     <Compile Include="ITestContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RunResult.cs" />
+    <Compile Include="SuiteRunResult.cs" />
+    <Compile Include="TestCaseResult.cs" />
     <Compile Include="TestRunner.cs" />
     <Compile Include="TestSuite.cs" />
   </ItemGroup>
