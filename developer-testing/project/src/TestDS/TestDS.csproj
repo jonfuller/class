@@ -43,6 +43,7 @@
     <Compile Include="AssemblyTestLoader.cs" />
     <Compile Include="AssertionException.cs" />
     <Compile Include="ClassContainer.cs" />
+    <Compile Include="ClassTestCase.cs" />
     <Compile Include="Ext.cs" />
     <Compile Include="ITestCase.cs" />
     <Compile Include="ITestContainer.cs" />
