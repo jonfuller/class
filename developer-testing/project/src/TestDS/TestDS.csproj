@@ -50,7 +50,6 @@
     <Compile Include="RunResult.cs" />
     <Compile Include="TestRunner.cs" />
     <Compile Include="TestSuite.cs" />
-    <Compile Include="TestTracker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

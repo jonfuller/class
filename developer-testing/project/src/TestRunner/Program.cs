@@ -37,17 +37,8 @@ namespace Runner
             var loader = new AssemblyTestLoader();
             var suite = loader.Load(assemblyName);
 
-            var executed = suite
-                .TestContainers
-                .Select(container => container.Run())
-                .Aggregate(
-                    new RunResult() {Passes = 0, Failures = 0},
-                    (state, current) => new RunResult()
-                                        {
-                                            Passes = state.Passes + current.Passes,
-                                            Failures = state.Failures + current.Failures
-                                        });
-            var total = executed.Failures + executed.Passes;
+            var executed = new TestRunner().Run(suite);
+            var total = executed.Passes + executed.Failures;
 
             _output.WriteLine("Loaded: {0}".FormatWith(Path.GetFileName(assemblyName)));
             _output.WriteLine("  {0} test(s) loaded.".FormatWith(total));

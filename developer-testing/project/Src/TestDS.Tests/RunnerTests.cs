@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Machine.Specifications;
 
 namespace TestDS.Tests
@@ -11,19 +10,13 @@ namespace TestDS.Tests
             TheSuite = Suites.NoTests;
 
         Because of = () =>
-            Runner.Run(TheSuite);
-
-        It suite_should_be_executed = () =>
-            TheSuite.Executed.ShouldBeTrue();
-
-        It should_tell_tracker_pass = () =>
-            Tracker.Succeeded.ShouldBeTrue();
+            Result = Runner.Run(TheSuite);
 
         It should_tell_tracker_zero_passing = () =>
-            Tracker.NumberPassed.ShouldEqual(0);
+            Result.Passes.ShouldEqual(0);
 
         It should_tell_tracker_zero_failing = () =>
-            Tracker.NumberFailed.ShouldEqual(0);
+            Result.Failures.ShouldEqual(0);
     }
 
     [Subject("Test Runner")]
@@ -33,19 +26,13 @@ namespace TestDS.Tests
             TheSuite = Suites.OnePassingTest;
 
         Because of = () =>
-            Runner.Run(TheSuite);
-
-        It suite_should_be_executed = () =>
-            TheSuite.Executed.ShouldBeTrue();
-
-        It should_tell_tracker_pass = () =>
-            Tracker.Succeeded.ShouldBeTrue();
+            Result = Runner.Run(TheSuite);
 
         It should_tell_tracker_one_passing = () =>
-            Tracker.NumberPassed.ShouldEqual(1);
+            Result.Passes.ShouldEqual(1);
 
         It should_tell_tracker_zero_failing = () =>
-            Tracker.NumberFailed.ShouldEqual(0);
+            Result.Failures.ShouldEqual(0);
     }
 
     [Subject("Test Runner")]
@@ -55,31 +42,24 @@ namespace TestDS.Tests
             TheSuite = Suites.OnePassingTestOneFailingTest;
 
         Because of = () =>
-            Runner.Run(TheSuite);
-
-        It suite_should_be_executed = () =>
-            TheSuite.Executed.ShouldBeTrue();
-
-        It should_tell_tracker_pass = () =>
-            Tracker.Succeeded.ShouldBeTrue();
+            Result = Runner.Run(TheSuite);
 
         It should_tell_tracker_one_passing = () =>
-            Tracker.NumberPassed.ShouldEqual(1);
+            Result.Passes.ShouldEqual(1);
 
         It should_tell_tracker_zero_failing = () =>
-            Tracker.NumberFailed.ShouldEqual(0);
+            Result.Failures.ShouldEqual(1);
     }
 
     public abstract class RunnerSpecs
     {
-        protected static TestTracker Tracker;
         protected static TestRunner Runner;
         protected static TestSuite TheSuite;
+        protected static RunResult Result;
 
         Establish context =() =>
                            {
-                               Tracker = new TestTracker();
-                               Runner = new TestRunner(Tracker);
+                               Runner = new TestRunner();
                            };
     }
 
