@@ -15,11 +15,18 @@ namespace Runner
                 assemblyName)
                 .Substring(6);
         }
+
         static int Main(string[] args)
         {
-            return new Application(Console.Out).Start(GetPath("OneTest.dll"))
+            var exitCode = new Application(Console.Out).Start(GetPath("OneTest.dll"), GetPath("SomeTests.dll"))
                 ? 0
                 : 1;
+
+            Console.WriteLine(string.Empty);
+            Console.WriteLine("Press any key to exit");
+            Console.ReadKey();
+
+            return exitCode;
         }
     }
 
