@@ -1,8 +1,1 @@
-*.sln.cache
-_ReSharper*
-*.user
-*.suo
-
 results.xml
-bin
-obj
