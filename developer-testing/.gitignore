@@ -2,3 +2,7 @@
 _ReSharper*
 *.user
 *.suo
+
+results.xml
+bin
+obj
