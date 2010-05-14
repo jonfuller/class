@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Acceptance.cs" />
     <Compile Include="AssemblyTestLoaderSpecs.cs" />
+    <Compile Include="Assertions\ShouldEqualSpecs.cs" />
     <Compile Include="ClassContainerSpecs.cs" />
     <Compile Include="ClassTestCaseSpecs.cs" />
     <Compile Include="RunnerTests.cs" />
@@ -76,6 +77,7 @@
       <Name>Runner</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

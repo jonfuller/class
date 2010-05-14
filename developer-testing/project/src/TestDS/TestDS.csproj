@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AssemblyTestLoader.cs" />
     <Compile Include="AssertionException.cs" />
+    <Compile Include="Assertion\AssertExt.cs" />
     <Compile Include="ClassContainer.cs" />
     <Compile Include="ClassTestCase.cs" />
     <Compile Include="ContainerRunResult.cs" />
