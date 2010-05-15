@@ -18,7 +18,7 @@ namespace Runner
 
         static int Main(string[] args)
         {
-            var exitCode = new Application(Console.Out).Start(GetPath("OneTest.dll"), GetPath("SomeTests.dll"))
+            var exitCode = new Application(new TextReporter(Console.Out)).Start(GetPath("OneTest.dll"), GetPath("SomeTests.dll"))
                 ? 0
                 : 1;
 
@@ -32,11 +32,11 @@ namespace Runner
 
     public class Application
     {
-        private readonly TextWriter _output;
+        private readonly IReporter _reporter;
 
-        public Application(TextWriter output)
+        public Application(IReporter reporter)
         {
-            _output = output;
+            _reporter = reporter;
         }
 
         public bool Start(params string[] assemblyNames)
@@ -45,35 +45,10 @@ namespace Runner
             var suites = loader.Load(assemblyNames);
 
             var executed = new TestRunner().Run(suites);
-            var totalPasses = executed.Sum(x => x.Passes);
-            var totalFailures = executed.Sum(x => x.Failures);
-            var total = totalPasses + totalFailures;
 
-            _output.WriteLine("Loaded: {0}".FormatWith(suites.Select(s => s.Name).Join(", ")));
-            _output.WriteLine("  {0} {1} loaded.".FormatWith(
-                total,
-                "test".Pluralize(total)));
-            _output.WriteLine("  {0}/{1} {2} passed ({3} {4}).".FormatWith(
-                totalPasses,
-                total,
-                "test".Pluralize(total),
-                totalFailures,
-                "failure".Pluralize(totalFailures)));
-            
-            if (totalFailures > 0 )
-                _output.WriteLine("Failures: ");
-            executed.Each(suiteResult => suiteResult
-                .Results
-                .Where(containerResult => containerResult.Results.Any(r => !r.Pass))
-                .Each(f =>
-                {
-                    _output.WriteLine("  {0}.{1} contained {2} failures.".FormatWith(suiteResult.Name, f.Name, f.Failures));
-                    f.Results.Where(r => !r.Pass).Each(r => _output.WriteLine("    {0} failed. [{1}]".FormatWith(r.Name, r.Message)));
-                }));
+            _reporter.Report(executed);
 
-            _output.Flush();
-            
-            return totalFailures == 0;
+            return executed.Sum(x => x.Failures) == 0;
         }
     }
 }

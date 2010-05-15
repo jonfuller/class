@@ -48,6 +48,7 @@
     <Compile Include="ClassTestCase.cs" />
     <Compile Include="ContainerRunResult.cs" />
     <Compile Include="Ext.cs" />
+    <Compile Include="IReporter.cs" />
     <Compile Include="ITestCase.cs" />
     <Compile Include="ITestContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,6 +56,8 @@
     <Compile Include="TestCaseResult.cs" />
     <Compile Include="TestRunner.cs" />
     <Compile Include="TestSuite.cs" />
+    <Compile Include="TextReporter.cs" />
+    <Compile Include="XmlReporter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
