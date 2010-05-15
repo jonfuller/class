@@ -206,7 +206,7 @@ namespace TestDS.Tests.Assertions
     public class asserting_collection_items_none_match_predicate_when_some_do : AssertionSpecs
     {
         Because of = () =>
-            RunAssertion(() => AssertExt.NoneShould(new [] { "coffee", "tea" }, x => x.StartsWith("c")));
+            RunAssertion(() => AssertExt.NoneShould(new[] { "coffee", "tea" }, x => x.StartsWith("c")));
 
         It should_fail = () =>
             passed.ShouldBeFalse();
@@ -214,6 +214,59 @@ namespace TestDS.Tests.Assertions
         It should_show_expected_and_actual_values = () =>
             message.ShouldContain("1 item matched: coffee");
     }
+
+    [Subject("Object Type Assertions")]
+    public class item_should_be_of_type_and_is_of_type : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldBeA<DateTime>(DateTime.Now));
+
+        It should_pass = () =>
+            passed.ShouldBeTrue();
+    }
+
+    [Subject("Object Type Assertions")]
+    public class item_should_be_of_type_and_is_not_of_type : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldBeA<DateTime>(StringComparer.Ordinal));
+
+        It should_fail = () =>
+            passed.ShouldBeFalse();
+
+        It should_show_expected_and_actual_values = () =>
+            message.ShouldContain("Expected <DateTime> but was <OrdinalComparer>");
+    }
+
+    [Subject("Object Type Assertions")]
+    public class item_should_not_be_of_type_and_is_not_of_type : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldNotBeA<DateTime>(new InvalidProgramException()));
+
+        It should_pass = () =>
+            passed.ShouldBeTrue();
+    }
+
+    [Subject("Object Type Assertions")]
+    public class item_should_not_be_of_type_and_is_of_type : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldNotBeA<DateTime>(DateTime.MinValue));
+
+        It should_fail = () =>
+            passed.ShouldBeFalse();
+
+        It should_show_expected_and_actual_values = () =>
+            message.ShouldContain("Expected to NOT be a <DateTime>, but was.");
+    }
+
+    // be zero
+    // be one
+    // should be true
+    // should be false
+    // xml output
+    // ability to specify output from command line
 
 
 

@@ -80,5 +80,23 @@ namespace TestDS.Assertion
                 "item".Pluralize(matchers.Count()),
                 matchers.Select(f => f.ToString()).Join(", ")));
         }
+
+        public static void ShouldBeA<TExpected>(this object actual)
+        {
+            if (actual is TExpected)
+                return;
+
+            throw new AssertionException("Expected <{0}> but was <{1}>".FormatWith(
+                typeof(TExpected).Name,
+                actual.GetType().Name));
+        }
+
+        public static void ShouldNotBeA<TExpected>(this object actual)
+        {
+            if (!(actual is TExpected))
+                return;
+
+            throw new AssertionException("Expected to NOT be a <{0}>, but was.".FormatWith(typeof(TExpected).Name));
+        }
     }
 }
