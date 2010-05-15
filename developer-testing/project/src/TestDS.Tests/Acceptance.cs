@@ -23,23 +23,58 @@ namespace TestDS.Tests
         It should_have_number_of_failures_in_summary = () =>
             output.Root.Element("Summary").Attribute("failures").Value.ShouldEqual("1");
 
-        It should_have_suite_for_each_assembly;
+        It should_have_suite_for_each_assembly = () =>
+            output.Root.Elements("Suite").Count().ShouldEqual(2);
 
-        It should_have_container_for_each_class_under_assembly_container;
+        It should_have_name_on_each_suite = () =>
+            output.Root.Elements("Suite").Select(x => x.Attribute("name").Value)
+                .ShouldEachConformTo(name => name == "OneTest" || name == "OneFailingTest");
 
-        It should_have_case_for_each_test_method_in_class_under_container;
+        It should_have_summary_of_passes_for_each_suite = () => {
+            output.Root.Elements("Suite").First().Attribute("passes").Value.ShouldEqual("1");
+            output.Root.Elements("Suite").Last().Attribute("passes").Value.ShouldEqual("0");
+        };
 
-        It should_have_summary_of_passes_and_failures_for_each_suite;
+        It should_have_summary_of_failures_for_each_suite = () => {
+            output.Root.Elements("Suite").First().Attribute("failures").Value.ShouldEqual("0");
+            output.Root.Elements("Suite").Last().Attribute("failures").Value.ShouldEqual("1");
+        };
 
-        It should_have_summary_of_passes_and_failures_for_each_container;
+        It should_have_container_for_each_class_under_assembly_container = () =>
+            output.Root.Elements("Suite").First().Elements("Container").Count().ShouldEqual(1);
 
-        It should_have_pass_or_fail_status_on_each_test_case;
+        It should_have_name_on_each_container = () =>
+            output.Root.Elements("Suite").First().Elements("Container").First().Attribute("name").Value.ShouldEqual("Tests");
 
-        It should_have_name_on_each_suite;
+        It should_have_summary_of_passes_for_each_container = () => {
+            output.Root.Elements("Suite").First().Element("Container").Attribute("passes").Value.ShouldEqual("1");
+            output.Root.Elements("Suite").Last().Element("Container").Attribute("passes").Value.ShouldEqual("0");
+        };
 
-        It should_have_name_on_each_container;
+        It should_have_summary_of_failures_for_each_container = () => {
+            output.Root.Elements("Suite").First().Element("Container").Attribute("failures").Value.ShouldEqual("0");
+            output.Root.Elements("Suite").Last().Element("Container").Attribute("failures").Value.ShouldEqual("1");
+        };
 
-        It should_have_name_on_each_test_case;
+        It should_have_case_for_each_test_method_in_class_under_container = () => {
+            output.Root.Elements("Suite").First().Element("Container").Elements("TestCase").Count().ShouldEqual(1);
+            output.Root.Elements("Suite").Last().Element("Container").Elements("TestCase").Count().ShouldEqual(1);
+        };
+
+        It should_have_name_on_each_test_case = () => {
+            output.Root.Elements("Suite").First().Element("Container").Element("TestCase").Attributes("name").Count().ShouldEqual(1);
+            output.Root.Elements("Suite").Last().Element("Container").Element("TestCase").Attributes("name").Count().ShouldEqual(1);
+        };
+
+        It should_have_pass_or_fail_status_on_each_test_case = () => {
+            output.Root.Elements("Suite").First().Element("Container").Element("TestCase").Attribute("status").Value.ShouldEqual("true");
+            output.Root.Elements("Suite").Last().Element("Container").Element("TestCase").Attribute("status").Value.ShouldEqual("false");
+        };
+
+        It should_have_fail_message_on_each_failing_test_case = () => {
+            output.Root.Elements("Suite").First().Element("Container").Element("TestCase").Attributes("message").Count().ShouldEqual(0);
+            output.Root.Elements("Suite").Last().Element("Container").Element("TestCase").Attributes("message").Count().ShouldEqual(1);
+        };
     }
 
     [Subject("Acceptance")]
