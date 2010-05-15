@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -18,7 +19,7 @@ namespace Runner
 
         static int Main(string[] args)
         {
-            var exitCode = new Application(new TextReporter(Console.Out)).Start(GetPath("OneTest.dll"), GetPath("SomeTests.dll"))
+            var exitCode = new Application(new TextReporter(Console.Out)).Start(new []{GetPath("OneTest.dll"), GetPath("SomeTests.dll")})
                 ? 0
                 : 1;
 
@@ -39,7 +40,7 @@ namespace Runner
             _reporter = reporter;
         }
 
-        public bool Start(params string[] assemblyNames)
+        public bool Start(IEnumerable<string> assemblyNames)
         {
             var loader = new AssemblyTestLoader();
             var suites = loader.Load(assemblyNames);

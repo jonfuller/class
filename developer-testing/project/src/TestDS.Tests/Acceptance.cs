@@ -1,9 +1,47 @@
 ﻿using System.IO;
+using System.Linq;
+using System.Xml.Linq;
 using Machine.Specifications;
 using Runner;
 
 namespace TestDS.Tests
 {
+    [Subject("Acceptance")]
+    public class Running_Suite_With_A_Test_With_Xml_Output : ApplicationSpecsXml
+    {
+        Because of = () =>
+            application.Start(Assemblies.OneTest.Concat(Assemblies.OneFailingTest));
+
+        It should_have_loaded_assemblies_in_summary = () => {
+            output.Root.Element("Summary").Elements("Loaded").ShouldNotBeEmpty();
+            output.Root.Element("Summary").Elements("Loaded").First().Value.ShouldEqual("OneTest");
+        };
+
+        It should_have_number_of_passes_in_summary = () =>
+            output.Root.Element("Summary").Attribute("passes").Value.ShouldEqual("1");
+
+        It should_have_number_of_failures_in_summary = () =>
+            output.Root.Element("Summary").Attribute("failures").Value.ShouldEqual("1");
+
+        It should_have_suite_for_each_assembly;
+
+        It should_have_container_for_each_class_under_assembly_container;
+
+        It should_have_case_for_each_test_method_in_class_under_container;
+
+        It should_have_summary_of_passes_and_failures_for_each_suite;
+
+        It should_have_summary_of_passes_and_failures_for_each_container;
+
+        It should_have_pass_or_fail_status_on_each_test_case;
+
+        It should_have_name_on_each_suite;
+
+        It should_have_name_on_each_container;
+
+        It should_have_name_on_each_test_case;
+    }
+
     [Subject("Acceptance")]
     public class Running_Suite_With_A_Test : ApplicationSpecs
     {
@@ -83,8 +121,20 @@ namespace TestDS.Tests
         private Establish context = () =>
         {
             outputStream = new StringWriter();
-            application = new Application(outputStream);
+            application = new Application(new TextReporter(outputStream));
         };
     }
 
+    public abstract class ApplicationSpecsXml
+    {
+        protected static Application application;
+        protected static XDocument output { get { return reporter.Document; } }
+        protected static XmlReporter reporter;
+
+        private Establish context = () =>
+        {
+            reporter = new XmlReporter();
+            application = new Application(reporter);
+        };
+    }
 }
