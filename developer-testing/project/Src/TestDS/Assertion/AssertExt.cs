@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TestDS.Assertion
+﻿namespace TestDS.Assertion
 {
     public static class AssertExt
     {
@@ -23,6 +21,20 @@ namespace TestDS.Assertion
             if (actual == null)
                 return;
             throw new AssertionException("Is not null.  Expected <null> but got <{0}>".FormatWith(actual));
+        }
+
+        public static void ShouldContain(string actual, string substring)
+        {
+            if (actual.Contains(substring))
+                return;
+            throw new AssertionException("<{0}> was expected to contain <{1}>, but didn't.".FormatWith(actual, substring));
+        }
+
+        public static void ShouldNotContain(string actual, string notSubstring)
+        {
+            if (!actual.Contains(notSubstring))
+                return;
+            throw new AssertionException("<{0}> was expected to NOT contain <{1}>, but did.".FormatWith(actual, notSubstring));
         }
     }
 }
