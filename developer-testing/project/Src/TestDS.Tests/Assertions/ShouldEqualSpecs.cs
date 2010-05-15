@@ -50,6 +50,30 @@ namespace TestDS.Tests.Assertions
             passed.ShouldBeTrue();
     }
 
+
+    [Subject("Nullity Assertions")]
+    public class asserting_null_value_as_null : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldBeNull(null));
+
+        It should_pass = () =>
+            passed.ShouldBeTrue();
+    }
+
+    [Subject("Nullity Assertions")]
+    public class asserting_value_as_null : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldBeNull(3));
+
+        It should_fail = () =>
+            passed.ShouldBeFalse();
+
+        It should_show_expected_and_actual_values = () =>
+            message.ShouldContain("Expected <null> but got <3>");
+    }
+
     public abstract class AssertionSpecs
     {
         protected static string message { get { return thrown.Message; } }
