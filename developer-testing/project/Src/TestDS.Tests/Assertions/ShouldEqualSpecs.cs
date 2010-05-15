@@ -123,6 +123,52 @@ namespace TestDS.Tests.Assertions
             message.ShouldContain("<mama mia> was expected to NOT contain <mama>, but did.");
     }
 
+    [Subject("Collection is Empty Assertions")]
+    public class asserting_collection_is_empty_when_it_is : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldBeEmpty(new object[0]));
+
+        It should_pass = () =>
+            passed.ShouldBeTrue();
+    }
+
+    [Subject("Collection is Empty Assertions")]
+    public class asserting_collection_is_empty_when_it_is_not : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldBeEmpty(new object[] { "hamburger" }));
+
+        It should_fail = () =>
+            passed.ShouldBeFalse();
+
+        It should_show_expected_and_actual_values = () =>
+            message.ShouldContain("Wasn't empty.  Contained 1 item(s): hamburger.");
+    }
+
+    [Subject("Collection is Not Empty Assertions")]
+    public class asserting_collection_is_not_empty_when_has_items : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldNotBeEmpty(new object[]{"water"}));
+
+        It should_pass = () =>
+            passed.ShouldBeTrue();
+    }
+
+    [Subject("Collection is Not Empty Assertions")]
+    public class asserting_collection_is_not_empty_when_it_is_empty : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldNotBeEmpty(new object[0]));
+
+        It should_fail = () =>
+            passed.ShouldBeFalse();
+
+        It should_show_expected_and_actual_values = () =>
+            message.ShouldContain("Was empty, but should not have been.");
+    }
+
 
 
     public abstract class AssertionSpecs
