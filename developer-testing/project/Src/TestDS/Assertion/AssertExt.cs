@@ -56,5 +56,29 @@ namespace TestDS.Assertion
                 return;
             throw new AssertionException("Was empty, but should not have been.");
         }
+
+        public static void AllShould<T>(this IEnumerable<T> target, Func<T, bool> predicate)
+        {
+            if (target.All(predicate))
+                return;
+
+            var failers = target.Where(x => !predicate(x));
+            throw new AssertionException("{0} {1} didn't match: {2}".FormatWith(
+                failers.Count(),
+                "item".Pluralize(failers.Count()),
+                failers.Select(f => f.ToString()).Join(", ")));
+        }
+
+        public static void NoneShould<T>(this IEnumerable<T> target, Func<T, bool> predicate)
+        {
+            if (target.None(predicate))
+                return;
+
+            var matchers = target.Where(predicate);
+            throw new AssertionException("{0} {1} matched: {2}".FormatWith(
+                matchers.Count(),
+                "item".Pluralize(matchers.Count()),
+                matchers.Select(f => f.ToString()).Join(", ")));
+        }
     }
 }

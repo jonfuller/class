@@ -27,7 +27,7 @@ namespace TestDS
             return target.ToList();
         }
 
-        public static bool None<T>(this IEnumerable<T> target, Predicate<T> predicate)
+        public static bool None<T>(this IEnumerable<T> target, Func<T, bool> predicate)
         {
             foreach (var item in target)
                 if (predicate(item))

@@ -150,7 +150,7 @@ namespace TestDS.Tests.Assertions
     public class asserting_collection_is_not_empty_when_has_items : AssertionSpecs
     {
         Because of = () =>
-            RunAssertion(() => AssertExt.ShouldNotBeEmpty(new object[]{"water"}));
+            RunAssertion(() => AssertExt.ShouldNotBeEmpty(new object[] { "water" }));
 
         It should_pass = () =>
             passed.ShouldBeTrue();
@@ -167,6 +167,52 @@ namespace TestDS.Tests.Assertions
 
         It should_show_expected_and_actual_values = () =>
             message.ShouldContain("Was empty, but should not have been.");
+    }
+
+    [Subject("Collection All Should Match Assertions")]
+    public class asserting_collection_items_all_match_predicate_when_they_do : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.AllShould(new[] { "water", "beer" }, x => x.EndsWith("r")));
+
+        It should_pass = () =>
+            passed.ShouldBeTrue();
+    }
+
+    [Subject("Collection All Should Match Assertions")]
+    public class asserting_collection_items_all_match_predicate_when_they_do_not : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.AllShould(new[] { "coffee", "tea" }, x => x.EndsWith("e")));
+
+        It should_fail = () =>
+            passed.ShouldBeFalse();
+
+        It should_show_expected_and_actual_values = () =>
+            message.ShouldContain("1 item didn't match: tea");
+    }
+
+    [Subject("Collection None Should Match Assertions")]
+    public class asserting_collection_items_none_match_predicate_when_none_do : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.NoneShould(new[] { "water", "beer" }, x => x == "coffee"));
+
+        It should_pass = () =>
+            passed.ShouldBeTrue();
+    }
+
+    [Subject("Collection None Should Match Assertions")]
+    public class asserting_collection_items_none_match_predicate_when_some_do : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.NoneShould(new [] { "coffee", "tea" }, x => x.StartsWith("c")));
+
+        It should_fail = () =>
+            passed.ShouldBeFalse();
+
+        It should_show_expected_and_actual_values = () =>
+            message.ShouldContain("1 item matched: coffee");
     }
 
 
