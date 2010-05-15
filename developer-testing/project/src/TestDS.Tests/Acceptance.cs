@@ -14,10 +14,10 @@ namespace TestDS.Tests
             output.ShouldContain("Loaded: OneTest");
 
         It should_report_one_test_found = () =>
-            output.ShouldContain(@"1 test(s) loaded.");
+            output.ShouldContain(@"1 test loaded.");
 
         It should_report_one_test_out_of_one_test_passed = () =>
-            output.ShouldContain(@"1/1 test(s) passed");
+            output.ShouldContain(@"1/1 test passed");
 
         It should_report_zero_failures = () =>
             output.ShouldContain(@"0 failures");
@@ -35,11 +35,11 @@ namespace TestDS.Tests
         Because of = () =>
             exitCode = application.Start(Assemblies.OneFailingTest);
 
-        It should_report_zero_tesst_out_of_one_test_passed = () =>
-            output.ShouldContain(@"0/1 test(s) passed");
+        It should_report_zero_tests_out_of_one_test_passed = () =>
+            output.ShouldContain(@"0/1 test passed");
 
         It should_report_one_test_out_of_one_failed = () =>
-            output.ShouldContain(@"1 failures");
+            output.ShouldContain(@"1 failure");
 
         It should_output_failure_value = () =>
             exitCode.ShouldBeFalse();
@@ -67,7 +67,7 @@ namespace TestDS.Tests
             output.ShouldContain("Loaded: NoTests");
 
         It should_report_no_tests_found = () =>
-            output.ShouldContain("0 test(s) loaded.");
+            output.ShouldContain("0 tests loaded.");
 
         It should_output_success_value = () =>
             exitCode.ShouldBeTrue();

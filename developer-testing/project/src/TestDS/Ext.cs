@@ -1,11 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Design.PluralizationServices;
+using System.Globalization;
 using System.Linq;
 
 namespace TestDS
 {
     public static class Ext
     {
+        public static string Pluralize(this string singular, int count)
+        {
+            if (count == 1)
+                return singular;
+            return PluralizationService.CreateService(CultureInfo.CurrentCulture).Pluralize(singular);
+        }
+
         public static IEnumerable<T> Concat<T>(this IEnumerable<T> target, T itemToAppend)
         {
             foreach(var item in target)

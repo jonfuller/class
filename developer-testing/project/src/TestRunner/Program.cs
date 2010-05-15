@@ -50,8 +50,15 @@ namespace Runner
             var total = totalPasses + totalFailures;
 
             _output.WriteLine("Loaded: {0}".FormatWith(suites.Select(s => s.Name).Join(", ")));
-            _output.WriteLine("  {0} test(s) loaded.".FormatWith(total));
-            _output.WriteLine("  {0}/{1} test(s) passed ({2} failures).".FormatWith(totalPasses, total, totalFailures));
+            _output.WriteLine("  {0} {1} loaded.".FormatWith(
+                total,
+                "test".Pluralize(total)));
+            _output.WriteLine("  {0}/{1} {2} passed ({3} {4}).".FormatWith(
+                totalPasses,
+                total,
+                "test".Pluralize(total),
+                totalFailures,
+                "failure".Pluralize(totalFailures)));
             
             if (totalFailures > 0 )
                 _output.WriteLine("Failures: ");
