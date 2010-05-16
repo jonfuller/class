@@ -1,6 +1,6 @@
 ﻿using System;
 using Machine.Specifications;
-using TestDS.Assertion;
+using AssertExt = TestDS.Assertion.AssertExt;
 
 namespace TestDS.Tests.Assertions
 {
@@ -261,14 +261,100 @@ namespace TestDS.Tests.Assertions
             message.ShouldContain("Expected to NOT be a <DateTime>, but was.");
     }
 
-    // be zero
-    // be one
-    // should be true
-    // should be false
-    // xml output
+
+    [Subject("Boolean Assertions")]
+    public class collection_should_be_true_when_true : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldBeTrue(true));
+
+        It should_pass = () =>
+            passed.ShouldBeTrue();
+    }
+
+    [Subject("Collection Assertions")]
+    public class collection_should_be_true_but_false : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldBeTrue(false));
+
+        It should_fail = () =>
+            passed.ShouldBeFalse();
+
+        It should_show_expected_and_actual_values = () =>
+            message.ShouldContain("Expected to be true, but was false.");
+    }
+
+    [Subject("Boolean Assertions")]
+    public class collection_should_be_false_when_false : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldBeFalse(false));
+
+        It should_pass = () =>
+            passed.ShouldBeTrue();
+    }
+
+    [Subject("Collection Assertions")]
+    public class collection_should_be_false_but_true : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldBeFalse(true));
+
+        It should_fail = () =>
+            passed.ShouldBeFalse();
+
+        It should_show_expected_and_actual_values = () =>
+            message.ShouldContain("Expected to be false, but was true.");
+    }
+
+    [Subject("Number Assertions")]
+    public class collection_should_be_one_when_one : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldBeOne(1));
+
+        It should_pass = () =>
+            passed.ShouldBeTrue();
+    }
+
+    [Subject("Number Assertions")]
+    public class collection_should_be_one_when_not_one : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldBeOne(0));
+
+        It should_fail = () =>
+            passed.ShouldBeFalse();
+
+        It should_show_expected_and_actual_values = () =>
+            message.ShouldContain("Expected to be 1, but was 0.");
+    }
+
+    [Subject("Number Assertions")]
+    public class collection_should_be_zero_when_zero : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldBeZero(0));
+
+        It should_pass = () =>
+            passed.ShouldBeTrue();
+    }
+
+    [Subject("Number Assertions")]
+    public class collection_should_be_zero_when_not_zero : AssertionSpecs
+    {
+        Because of = () =>
+            RunAssertion(() => AssertExt.ShouldBeZero(1));
+
+        It should_fail = () =>
+            passed.ShouldBeFalse();
+
+        It should_show_expected_and_actual_values = () =>
+            message.ShouldContain("Expected to be 0, but was 1.");
+    }
+
     // ability to specify output from command line
-
-
 
     public abstract class AssertionSpecs
     {

@@ -98,5 +98,37 @@ namespace TestDS.Assertion
 
             throw new AssertionException("Expected to NOT be a <{0}>, but was.".FormatWith(typeof(TExpected).Name));
         }
+
+        public static void ShouldBeTrue(this bool target)
+        {
+            if (target)
+                return;
+
+            throw new AssertionException("Expected to be true, but was false.");
+        }
+
+        public static void ShouldBeFalse(this bool target)
+        {
+            if (!target)
+                return;
+
+            throw new AssertionException("Expected to be false, but was true.");
+        }
+
+        public static void ShouldBeZero(this int zero)
+        {
+            if (zero == 0)
+                return;
+
+            throw new AssertionException("Expected to be 0, but was {0}.".FormatWith(zero));
+        }
+
+        public static void ShouldBeOne(this int one)
+        {
+            if (one == 1)
+                return;
+
+            throw new AssertionException("Expected to be 1, but was {0}.".FormatWith(one));
+        }
     }
 }
