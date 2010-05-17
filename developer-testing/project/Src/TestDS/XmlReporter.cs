@@ -19,6 +19,7 @@ namespace TestDS
         public void Report(IEnumerable<SuiteRunResult> executed)
         {
             var report = new XElement("Report");
+
             var summary = MakeSummary(
                 executed.Select(x => x.Name),
                 executed.Sum(x => x.Passes),

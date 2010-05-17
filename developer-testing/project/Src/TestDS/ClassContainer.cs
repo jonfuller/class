@@ -30,10 +30,10 @@ namespace TestDS
         public ContainerRunResult Run()
         {
             return _testCases.Aggregate(
-                new ContainerRunResult() {Results = Enumerable.Empty<TestCaseResult>()},
+                new ContainerRunResult() {Name = Name, Results = Enumerable.Empty<TestCaseResult>()},
                 (state, testCase) => new ContainerRunResult
                 {
-                    Name = Name,
+                    Name = state.Name,
                     Results = state.Results.Append(testCase.Run())
                 });
         }
