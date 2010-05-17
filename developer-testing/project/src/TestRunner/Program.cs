@@ -25,10 +25,6 @@ namespace Runner
                 ? 0
                 : 1;
 
-            Console.WriteLine(string.Empty);
-            Console.WriteLine("Press any key to exit");
-            Console.ReadKey();
-
             return exitCode;
         }
 
