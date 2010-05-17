@@ -51,6 +51,7 @@
     <Compile Include="IReporter.cs" />
     <Compile Include="ITestCase.cs" />
     <Compile Include="ITestContainer.cs" />
+    <Compile Include="MultiReporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SuiteRunResult.cs" />
     <Compile Include="TestCaseResult.cs" />

@@ -1,11 +1,36 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using Machine.Specifications;
 using Runner;
 
 namespace TestDS.Tests
 {
+    [Subject("Command Line")]
+    public class Command_Line_Parsing
+    {
+        static Dictionary<string, List<string>> parsed;
+
+        Because of = () =>      
+            parsed = Program.ParseArgs(new []
+            {
+                "-xml", "output.xml",
+                "OneTest.dll",
+                "SomeTests.dll"
+            });
+
+        It should_parse_xml_filename = () =>
+            parsed[CmdArgs.XmlFileName].First().ShouldEqual("output.xml");
+
+        It should_parse_multiple_assemblies = () => {
+            parsed[CmdArgs.Assemblies][0].ShouldEqual("OneTest.dll");
+            parsed[CmdArgs.Assemblies][1].ShouldEqual("SomeTests.dll");
+        };
+    }
+
     [Subject("Acceptance")]
     public class Running_Suite_With_A_Test_With_Xml_Output : ApplicationSpecsXml
     {
@@ -163,12 +188,26 @@ namespace TestDS.Tests
     public abstract class ApplicationSpecsXml
     {
         protected static Application application;
-        protected static XDocument output { get { return reporter.Document; } }
+        protected static XDocument output
+        {
+            get
+            {
+                using (var stream = new MemoryStream(memory.GetBuffer()))
+                using (var reader = new StreamReader(stream))
+                    return XDocument.Load(reader);
+            }
+        }
+
         protected static XmlReporter reporter;
+
+        private static MemoryStream memory;
+        private static StreamWriter writer;
 
         private Establish context = () =>
         {
-            reporter = new XmlReporter();
+            memory = new MemoryStream();
+            writer = new StreamWriter(memory);
+            reporter = new XmlReporter(() => writer);
             application = new Application(reporter);
         };
     }

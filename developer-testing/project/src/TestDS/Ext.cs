@@ -15,11 +15,20 @@ namespace TestDS
             return PluralizationService.CreateService(CultureInfo.CurrentCulture).Pluralize(singular);
         }
 
-        public static IEnumerable<T> Concat<T>(this IEnumerable<T> target, T itemToAppend)
+        public static IEnumerable<T> Append<T>(this IEnumerable<T> target, T itemToAppend)
         {
             foreach(var item in target)
                 yield return item;
             yield return itemToAppend;
+        }
+
+        public static IEnumerable<T> AppendIf<T>(this IEnumerable<T> target, Func<IEnumerable<T>> toAppend, Func<bool> predicate)
+        {
+            foreach (var item in target)
+                yield return item;
+            if (predicate())
+                foreach (var item in toAppend())
+                    yield return item;
         }
 
         public static IEnumerable<T> Eval<T>(this IEnumerable<T> target)

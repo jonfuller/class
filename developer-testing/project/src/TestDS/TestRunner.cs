@@ -20,7 +20,7 @@ namespace TestDS
                     (state, current) => new SuiteRunResult()
                     {
                         Name = state.Name,
-                        Results = state.Results.Concat(current.Result)
+                        Results = state.Results.Append(current.Result)
                     });
         }
     }

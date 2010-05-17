@@ -1,12 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace TestDS
 {
     public class XmlReporter : IReporter
     {
-        public XDocument Document { get; private set; }
+        private readonly Func<TextWriter> _writerCreator;
+
+        public XmlReporter(Func<TextWriter> writerCreator)
+        {
+            _writerCreator = writerCreator;
+        }
 
         public void Report(IEnumerable<SuiteRunResult> executed)
         {
@@ -20,7 +28,11 @@ namespace TestDS
 
             report.Add(summary);
             report.Add(suites.ToArray());
-            Document = new XDocument(report);
+            using (var writer = _writerCreator())
+            using (var xmlWriter = XmlWriter.Create(writer, new XmlWriterSettings(){CloseOutput = true, Indent = true}))
+            {
+                report.Save(xmlWriter);
+            }
         }
 
         private XElement MakeSummary(IEnumerable<string> names, int passes, int failures)

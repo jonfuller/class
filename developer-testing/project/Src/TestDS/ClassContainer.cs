@@ -34,7 +34,7 @@ namespace TestDS
                 (state, testCase) => new ContainerRunResult
                 {
                     Name = Name,
-                    Results = state.Results.Concat(testCase.Run())
+                    Results = state.Results.Append(testCase.Run())
                 });
         }
     }
