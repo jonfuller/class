@@ -72,7 +72,7 @@ namespace TestDS
         {
             var testCase = new XElement("TestCase");
             testCase.Add(new XAttribute("name", result.Name));
-            testCase.Add(new XAttribute("status", result.Pass));
+            testCase.Add(new XAttribute("status", result.Pass ? "passed" : "failed"));
             if (!result.Pass)
                 testCase.Add(new XAttribute("message", result.Message));
 

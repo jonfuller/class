@@ -92,8 +92,8 @@ namespace TestDS.Tests
         };
 
         It should_have_pass_or_fail_status_on_each_test_case = () => {
-            output.Root.Elements("Suite").First().Element("Container").Element("TestCase").Attribute("status").Value.ShouldEqual("true");
-            output.Root.Elements("Suite").Last().Element("Container").Element("TestCase").Attribute("status").Value.ShouldEqual("false");
+            output.Root.Elements("Suite").First().Element("Container").Element("TestCase").Attribute("status").Value.ShouldEqual("passed");
+            output.Root.Elements("Suite").Last().Element("Container").Element("TestCase").Attribute("status").Value.ShouldEqual("failed");
         };
 
         It should_have_fail_message_on_each_failing_test_case = () => {
